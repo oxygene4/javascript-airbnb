@@ -12,12 +12,8 @@
   1. [Строки](#strings)
   1. [Функции](#functions)
   1. [Стрелочные функции](#arrow-functions)
-  1. [Классы и конструкторы](#classes--constructors)
-  1. [Модули](#modules)
-  1. [Итераторы и генераторы](#iterators-and-generators)
   1. [Свойства](#properties)
   1. [Переменные](#variables)
-  1. [Подъем](#hoisting)
   1. [Операторы сравнения и равенства](#comparison-operators--equality)
   1. [Блоки](#blocks)
   1. [Управляющие операторы](#control-statements)
@@ -73,7 +69,7 @@
 ## <a name="references">Объявление переменных</a>
 
   <a name="references--prefer-const"></a><a name="2.1"></a>
-  - [2.1](#references--prefer-const) Используйте `const` для объявления переменных; избегайте `var`. eslint: [`prefer-const`](https://eslint.org/docs/rules/prefer-const.html), [`no-const-assign`](https://eslint.org/docs/rules/no-const-assign.html)
+  - [2.1](#references--prefer-const) Используйте `const` для объявления переменных
 
     > Почему? Это гарантирует, что вы не сможете переопределять значения, т.к. это может привести к ошибкам и к усложнению понимания кода.
 
@@ -88,9 +84,7 @@
     ```
 
   <a name="references--disallow-var"></a><a name="2.2"></a>
-  - [2.2](#references--disallow-var) Если вам необходимо переопределять значения, то используйте `let` вместо `var`. eslint: [`no-var`](https://eslint.org/docs/rules/no-var.html)
-
-    > Почему? Область видимости `let` — блок, у `var` — функция.
+  - [2.2](#references--disallow-var) Если вам необходимо переопределять значения, то используйте `let`
 
     ```javascript
     // плохо
@@ -123,45 +117,8 @@
 
 ## <a name="objects">Объекты</a>
 
-  <a name="objects--no-new"></a><a name="3.1"></a>
-  - [3.1](#objects--no-new) Для создания объекта используйте литеральную нотацию. eslint: [`no-new-object`](https://eslint.org/docs/rules/no-new-object.html)
-
-    ```javascript
-    // плохо
-    const item = new Object();
-
-    // хорошо
-    const item = {};
-    ```
-
-  <a name="es6-computed-properties"></a><a name="3.4"></a>
-  - [3.2](#es6-computed-properties) Используйте вычисляемые имена свойств, когда создаёте объекты с динамическими именами свойств.
-
-    > Почему? Они позволяют вам определить все свойства объекта в одном месте.
-
-    ```javascript
-
-    function getKey(k) {
-      return `a key named ${k}`;
-    }
-
-    // плохо
-    const obj = {
-      id: 5,
-      name: 'San Francisco',
-    };
-    obj[getKey('enabled')] = true;
-
-    // хорошо
-    const obj = {
-      id: 5,
-      name: 'San Francisco',
-      [getKey('enabled')]: true,
-    };
-    ```
-
   <a name="es6-object-shorthand"></a><a name="3.5"></a>
-  - [3.3](#es6-object-shorthand) Используйте сокращённую запись метода объекта. eslint: [`object-shorthand`](https://eslint.org/docs/rules/object-shorthand.html)
+  - [3.1](#es6-object-shorthand) Используйте сокращённую запись метода объекта. eslint: [`object-shorthand`](https://eslint.org/docs/rules/object-shorthand.html)
 
     ```javascript
     // плохо
@@ -184,7 +141,7 @@
     ```
 
   <a name="es6-object-concise"></a><a name="3.6"></a>
-  - [3.4](#es6-object-concise) Используйте сокращённую запись свойств объекта. eslint: [`object-shorthand`](https://eslint.org/docs/rules/object-shorthand.html)
+  - [3.2](#es6-object-concise) Используйте сокращённую запись свойств объекта. eslint: [`object-shorthand`](https://eslint.org/docs/rules/object-shorthand.html)
 
     > Почему? Это короче и понятнее.
 
@@ -203,7 +160,7 @@
     ```
 
   <a name="objects--grouped-shorthand"></a><a name="3.7"></a>
-  - [3.5](#objects--grouped-shorthand) Группируйте ваши сокращённые записи свойств в начале объявления объекта.
+  - [3.3](#objects--grouped-shorthand) Группируйте ваши сокращённые записи свойств в начале объявления объекта.
 
     > Почему? Так легче сказать, какие свойства используют сокращённую запись.
 
@@ -233,7 +190,7 @@
     ```
 
   <a name="objects--quoted-props"></a><a name="3.8"></a>
-  - [3.6](#objects--quoted-props) Только недопустимые идентификаторы помещаются в кавычки. eslint: [`quote-props`](https://eslint.org/docs/rules/quote-props.html)
+  - [3.4](#objects--quoted-props) Только недопустимые идентификаторы помещаются в кавычки. eslint: [`quote-props`](https://eslint.org/docs/rules/quote-props.html)
 
     > Почему? На наш взгляд, такой код легче читать. Это улучшает подсветку синтаксиса, а также облегчает оптимизацию для многих JS движков.
 
@@ -254,7 +211,7 @@
     ```
 
   <a name="objects--prototype-builtins"></a>
-  - [3.7](#objects--prototype-builtins) Не вызывайте напрямую методы `Object.prototype`, такие как `hasOwnProperty`, `propertyIsEnumerable`, и `isPrototypeOf`. eslint: [`no-prototype-builtins`](https://eslint.org/docs/rules/no-prototype-builtins)
+  - [3.5](#objects--prototype-builtins) Не вызывайте напрямую методы `Object.prototype`, такие как `hasOwnProperty`, `propertyIsEnumerable`, и `isPrototypeOf`. eslint: [`no-prototype-builtins`](https://eslint.org/docs/rules/no-prototype-builtins)
 
     > Почему? Эти методы могут быть переопределены в свойствах объекта, который мы проверяем `{ hasOwnProperty: false }`, или этот объект может быть `null` (`Object.create(null)`).
 
@@ -274,7 +231,7 @@
     ```
 
   <a name="objects--rest-spread"></a>
-  - [3.8](#objects--rest-spread) Используйте оператор расширения вместо [`Object.assign`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) для поверхностного копирования объектов. Используйте синтаксис оставшихся свойств, чтобы получить новый объект с некоторыми опущенными свойствами.
+  - [3.6](#objects--rest-spread) Используйте оператор расширения вместо [`Object.assign`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) для поверхностного копирования объектов. Используйте синтаксис оставшихся свойств, чтобы получить новый объект с некоторыми опущенными свойствами.
 
     ```javascript
     // очень плохо
@@ -389,7 +346,8 @@
     // хорошо
     [1, 2, 3].map(x => x + 1);
 
-    // плохо - нет возвращаемого значения, следовательно, `acc` становится `undefined` после первой итерации
+    // плохо - нет возвращаемого значения, следовательно, 
+    // `acc` становится `undefined` после первой итерации
     [[0, 1], [2, 3], [4, 5]].reduce((acc, item, index) => {
       const flatten = acc.concat(item);
       acc[index] = flatten;
@@ -616,46 +574,11 @@
 
 ## <a name="functions">Функции</a>
 
-  <a name="functions--declarations"></a><a name="7.1"></a>
-  - [7.1](#functions--declarations) Используйте функциональные выражения вместо объявлений функций. eslint: [`func-style`](https://eslint.org/docs/rules/func-style)
+  <a name="functions--in-blocks"></a><a name="7.1"></a>
+  - [7.1](#functions--in-blocks) Никогда не объявляйте функции в нефункциональном блоке (`if`, `while`, и т.д.). Вместо этого присвойте функцию переменной. Браузеры позволяют выполнить ваш код, но все они интерпретируют его по-разному. eslint: [`no-loop-func`](https://eslint.org/docs/rules/no-loop-func.html)
 
-    > Почему? У объявлений функций есть подъем. Это означает, что можно использовать функцию до того, как она определена в файле, но это вредит читабельности и поддержке. Если вы обнаружили, что определение функции настолько большое или сложное, что мешает понимать остальную часть файла, то, возможно, пришло время извлечь его в отдельный модуль. Не забудьте явно назвать функциональное выражение, независимо от того, подразумевается ли имя из содержащейся переменной (такое часто бывает в современных браузерах или при использовании компиляторов, таких как Babel). Это помогает точнее определять место ошибки по стеку вызовов. ([Обсуждение](https://github.com/airbnb/javascript/issues/794))
-
-    ```javascript
-    // плохо
-    function foo() {
-      // ...
-    }
-
-    // плохо
-    const foo = function () {
-      // ...
-    };
-
-    // хорошо
-    // лексическое имя, отличное от вызываемой(-ых) переменной(-ых)
-    const foo = function uniqueMoreDescriptiveLexicalFoo() {
-      // ...
-    };
-    ```
-
-  <a name="functions--iife"></a><a name="7.2"></a>
-  - [7.2](#functions--iife) Оборачивайте в скобки немедленно вызываемые функции. eslint: [`wrap-iife`](https://eslint.org/docs/rules/wrap-iife.html)
-
-    > Почему? Немедленно вызываемая функция представляет собой единый блок. Чтобы чётко показать это — оберните функцию и вызывающие скобки в ещё одни скобки. Обратите внимание, что в мире с модулями вам больше не нужны немедленно вызываемые функции.
-
-    ```javascript
-    // Немедленно вызываемая функция
-    (function () {
-      console.log('Welcome to the Internet. Please follow me.');
-    }());
-    ```
-
-  <a name="functions--in-blocks"></a><a name="7.3"></a>
-  - [7.3](#functions--in-blocks) Никогда не объявляйте функции в нефункциональном блоке (`if`, `while`, и т.д.). Вместо этого присвойте функцию переменной. Браузеры позволяют выполнить ваш код, но все они интерпретируют его по-разному. eslint: [`no-loop-func`](https://eslint.org/docs/rules/no-loop-func.html)
-
-  <a name="functions--note-on-blocks"></a><a name="7.4"></a>
-  - [7.4](#functions--note-on-blocks) **Примечание:** ECMA-262 определяет `блок` как список инструкций. Объявление функции не является инструкцией.
+  <a name="functions--note-on-blocks"></a><a name="7.2"></a>
+  - [7.2](#functions--note-on-blocks) **Примечание:** ECMA-262 определяет `блок` как список инструкций. Объявление функции не является инструкцией.
 
     ```javascript
     // плохо
@@ -674,8 +597,8 @@
     }
     ```
 
-  <a name="functions--arguments-shadow"></a><a name="7.5"></a>
-  - [7.5](#functions--arguments-shadow) Никогда не называйте параметр `arguments`. Он будет иметь приоритет над объектом `arguments`, который доступен для каждой функции.
+  <a name="functions--arguments-shadow"></a><a name="7.3"></a>
+  - [7.3](#functions--arguments-shadow) Никогда не называйте параметр `arguments`. Он будет иметь приоритет над объектом `arguments`, который доступен для каждой функции.
 
     ```javascript
     // плохо
@@ -689,8 +612,8 @@
     }
     ```
 
-  <a name="es6-rest"></a><a name="7.6"></a>
-  - [7.6](#es6-rest) Никогда не используйте `arguments`, вместо этого используйте синтаксис оставшихся параметров `...`. eslint: [`prefer-rest-params`](https://eslint.org/docs/rules/prefer-rest-params)
+  <a name="es6-rest"></a><a name="7.4"></a>
+  - [7.4](#es6-rest) Никогда не используйте `arguments`, вместо этого используйте синтаксис оставшихся параметров `...`. eslint: [`prefer-rest-params`](https://eslint.org/docs/rules/prefer-rest-params)
 
     > Почему? `...` явно говорит о том, какие именно аргументы вы хотите извлечь. Кроме того, такой синтаксис создаёт настоящий массив, а не массивоподобный объект как `arguments`.
 
@@ -707,8 +630,8 @@
     }
     ```
 
-  <a name="es6-default-parameters"></a><a name="7.7"></a>
-  - [7.7](#es6-default-parameters) Используйте синтаксис записи аргументов по умолчанию, а не изменяйте аргументы функции.
+  <a name="es6-default-parameters"></a><a name="7.5"></a>
+  - [7.5](#es6-default-parameters) Используйте синтаксис записи аргументов по умолчанию, а не изменяйте аргументы функции.
 
     ```javascript
     // очень плохо
@@ -735,25 +658,8 @@
     }
     ```
 
-  <a name="functions--default-side-effects"></a><a name="7.8"></a>
-  - [7.8](#functions--default-side-effects) Избегайте побочных эффектов с параметрами по умолчанию.
-
-    > Почему? И так все понятно.
-
-    ```javascript
-    var b = 1;
-    // плохо
-    function count(a = b++) {
-      console.log(a);
-    }
-    count();  // 1
-    count();  // 2
-    count(3); // 3
-    count();  // 3
-    ```
-
-  <a name="functions--defaults-last"></a><a name="7.9"></a>
-  - [7.9](#functions--defaults-last) Всегда вставляйте последними параметры по умолчанию.
+  <a name="functions--defaults-last"></a><a name="7.6"></a>
+  - [7.6](#functions--defaults-last) Всегда вставляйте последними параметры по умолчанию.
 
     ```javascript
     // плохо
@@ -767,37 +673,8 @@
     }
     ```
 
-  <a name="functions--constructor"></a><a name="7.10"></a>
-  - [7.10](#functions--constructor) Никогда не используйте конструктор функций для создания новых функий. eslint: [`no-new-func`](https://eslint.org/docs/rules/no-new-func)
-
-    > Почему? Создание функции в таком духе вычисляет строку подобно `eval()`, из-за чего открываются уязвимости.
-
-    ```javascript
-    // плохо
-    var add = new Function('a', 'b', 'return a + b');
-
-    // все ещё плохо
-    var subtract = Function('a', 'b', 'return a - b');
-    ```
-
-  <a name="functions--signature-spacing"></a><a name="7.11"></a>
-  - [7.11](#functions--signature-spacing) Отступы при определении функции. eslint: [`space-before-function-paren`](https://eslint.org/docs/rules/space-before-function-paren) [`space-before-blocks`](https://eslint.org/docs/rules/space-before-blocks)
-
-    > Почему? Однородность кода — это хорошо. Вам не надо будет добавлять или удалять пробел при манипуляции с именем.
-
-    ```javascript
-    // плохо
-    const f = function(){};
-    const g = function (){};
-    const h = function() {};
-
-    // хорошо
-    const x = function () {};
-    const y = function a() {};
-    ```
-
-  <a name="functions--mutate-params"></a><a name="7.12"></a>
-  - [7.12](#functions--mutate-params) Никогда не изменяйте параметры. eslint: [`no-param-reassign`](https://eslint.org/docs/rules/no-param-reassign.html)
+  <a name="functions--mutate-params"></a><a name="7.7"></a>
+  - [7.7](#functions--mutate-params) Никогда не изменяйте параметры. eslint: [`no-param-reassign`](https://eslint.org/docs/rules/no-param-reassign.html)
 
     > Почему? Манипуляция объектами, приходящими в качестве параметров, может вызывать нежелательные побочные эффекты в вызывающей функции.
 
@@ -813,8 +690,8 @@
     }
     ```
 
-  <a name="functions--reassign-params"></a><a name="7.13"></a>
-  - [7.13](#functions--reassign-params) Никогда не переназначайте параметры. eslint: [`no-param-reassign`](https://eslint.org/docs/rules/no-param-reassign.html)
+  <a name="functions--reassign-params"></a><a name="7.8"></a>
+  - [7.8](#functions--reassign-params) Никогда не переназначайте параметры. eslint: [`no-param-reassign`](https://eslint.org/docs/rules/no-param-reassign.html)
 
     > Почему? Переназначенные параметры могут привести к неожиданному поведению, особенно при обращении к `arguments`. Это также может вызывать проблемы оптимизации, особенно в V8.
 
@@ -841,8 +718,8 @@
     }
     ```
 
-  <a name="functions--spread-vs-apply"></a><a name="7.14"></a>
-  - [7.14](#functions--spread-vs-apply) Отдавайте предпочтение использованию оператора расширения `...` при вызове вариативной функции. eslint: [`prefer-spread`](https://eslint.org/docs/rules/prefer-spread)
+  <a name="functions--spread-vs-apply"></a><a name="7.9"></a>
+  - [7.9](#functions--spread-vs-apply) Отдавайте предпочтение использованию оператора расширения `...` при вызове вариативной функции. eslint: [`prefer-spread`](https://eslint.org/docs/rules/prefer-spread)
 
     > Почему? Это чище, вам не нужно предоставлять контекст, и не так просто составить `new` с `apply`.
 
@@ -863,7 +740,7 @@
     ```
 
   <a name="functions--signature-invocation-indentation"></a>
-  - [7.15](#functions--signature-invocation-indentation) Функции с многострочным определением или запуском должны содержать такие же отступы, как и другие многострочные списки в этом руководстве: с каждым элементом на отдельной строке, с запятой в конце элемента. eslint: [`function-paren-newline`](https://eslint.org/docs/rules/function-paren-newline)
+  - [7.10](#functions--signature-invocation-indentation) Функции с многострочным определением или запуском должны содержать такие же отступы, как и другие многострочные списки в этом руководстве: с каждым элементом на отдельной строке, с запятой в конце элемента. eslint: [`function-paren-newline`](https://eslint.org/docs/rules/function-paren-newline)
 
     ```javascript
     // плохо
@@ -1052,432 +929,6 @@
     foo => (
        bar
     )
-    ```
-
-**[⬆ к оглавлению](#Оглавление)**
-
-## <a name="classes--constructors">Классы и конструкторы</a>
-
-  <a name="constructors--use-class"></a><a name="9.1"></a>
-  - [9.1](#constructors--use-class) Всегда используйте `class`. Избегайте прямых манипуляций с `prototype`.
-
-    > Почему? Синтаксис `class` является кратким и понятным.
-
-    ```javascript
-    // плохо
-    function Queue(contents = []) {
-      this.queue = [...contents];
-    }
-    Queue.prototype.pop = function () {
-      const value = this.queue[0];
-      this.queue.splice(0, 1);
-      return value;
-    };
-
-    // хорошо
-    class Queue {
-      constructor(contents = []) {
-        this.queue = [...contents];
-      }
-      pop() {
-        const value = this.queue[0];
-        this.queue.splice(0, 1);
-        return value;
-      }
-    }
-    ```
-
-  <a name="constructors--extends"></a><a name="9.2"></a>
-  - [9.2](#constructors--extends) Используйте `extends` для наследования.
-
-    > Почему? Это встроенный способ наследовать функциональность прототипа, не нарушая `instanceof`.
-
-    ```javascript
-    // плохо
-    const inherits = require('inherits');
-    function PeekableQueue(contents) {
-      Queue.apply(this, contents);
-    }
-    inherits(PeekableQueue, Queue);
-    PeekableQueue.prototype.peek = function () {
-      return this.queue[0];
-    };
-
-    // хорошо
-    class PeekableQueue extends Queue {
-      peek() {
-        return this.queue[0];
-      }
-    }
-    ```
-
-  <a name="constructors--chaining"></a><a name="9.3"></a>
-  - [9.3](#constructors--chaining) Методы могут возвращать `this`, чтобы делать цепочки вызовов.
-
-    ```javascript
-    // плохо
-    Jedi.prototype.jump = function () {
-      this.jumping = true;
-      return true;
-    };
-
-    Jedi.prototype.setHeight = function (height) {
-      this.height = height;
-    };
-
-    const luke = new Jedi();
-    luke.jump(); // => true
-    luke.setHeight(20); // => undefined
-
-    // хорошо
-    class Jedi {
-      jump() {
-        this.jumping = true;
-        return this;
-      }
-
-      setHeight(height) {
-        this.height = height;
-        return this;
-      }
-    }
-
-    const luke = new Jedi();
-
-    luke.jump()
-      .setHeight(20);
-    ```
-
-  <a name="constructors--tostring"></a><a name="9.4"></a>
-  - [9.4](#constructors--tostring) Вы можете определить свой собственный метод `toString()`, просто убедитесь, что он успешно работает и не создаёт никаких побочных эффектов.
-
-    ```javascript
-    class Jedi {
-      constructor(options = {}) {
-        this.name = options.name || 'no name';
-      }
-
-      getName() {
-        return this.name;
-      }
-
-      toString() {
-        return `Jedi - ${this.getName()}`;
-      }
-    }
-    ```
-
-  <a name="constructors--no-useless"></a><a name="9.5"></a>
-  - [9.5](#constructors--no-useless) У классов есть конструктор по умолчанию, если он не задан явно. Можно опустить пустой конструктор или конструктор, который только делегирует выполнение родительскому классу. eslint: [`no-useless-constructor`](https://eslint.org/docs/rules/no-useless-constructor)
-
-    ```javascript
-    // плохо
-    class Jedi {
-      constructor() {}
-
-      getName() {
-        return this.name;
-      }
-    }
-
-    // плохо
-    class Rey extends Jedi {
-      constructor(...args) {
-        super(...args);
-      }
-    }
-
-    // хорошо
-    class Rey extends Jedi {
-      constructor(...args) {
-        super(...args);
-        this.name = 'Rey';
-      }
-    }
-    ```
-
-  <a name="classes--no-duplicate-members"></a><a name="9.6"></a>
-  - [9.6](#classes--no-duplicate-members) Избегайте дублирующих членов класса. eslint: [`no-dupe-class-members`](https://eslint.org/docs/rules/no-dupe-class-members)
-
-    > Почему? Если объявление члена класса повторяется, без предупреждения будет использовано последнее. Наличие дубликатов скорее всего приведёт к ошибке.
-
-    ```javascript
-    // плохо
-    class Foo {
-      bar() { return 1; }
-      bar() { return 2; }
-    }
-
-    // хорошо
-    class Foo {
-      bar() { return 1; }
-    }
-
-    // хорошо
-    class Foo {
-      bar() { return 2; }
-    }
-    ```
-
-**[⬆ к оглавлению](#Оглавление)**
-
-## <a name="modules">Модули</a>
-
-  <a name="modules--use-them"></a><a name="10.1"></a>
-  - [10.1](#modules--use-them) Всегда используйте модули (`import`/`export`) вместо нестандартных модульных систем. Вы всегда сможете транспилировать код в вашу любимую модульную систему.
-
-    > Почему? Модули — это будущее. Давайте начнём использовать будущее уже сейчас!
-
-    ```javascript
-    // плохо
-    const AirbnbStyleGuide = require('./AirbnbStyleGuide');
-    module.exports = AirbnbStyleGuide.es6;
-
-    // ok
-    import AirbnbStyleGuide from './AirbnbStyleGuide';
-    export default AirbnbStyleGuide.es6;
-
-    // отлично
-    import { es6 } from './AirbnbStyleGuide';
-    export default es6;
-    ```
-
-  <a name="modules--no-wildcard"></a><a name="10.2"></a>
-  - [10.2](#modules--no-wildcard) Не используйте импорт через `*`.
-
-    > Почему? Это гарантирует, что у вас есть единственный экспорт по умолчанию.
-
-    ```javascript
-    // плохо
-    import * as AirbnbStyleGuide from './AirbnbStyleGuide';
-
-    // хорошо
-    import AirbnbStyleGuide from './AirbnbStyleGuide';
-    ```
-
-  <a name="modules--no-export-from-import"></a><a name="10.3"></a>
-  - [10.3](#modules--no-export-from-import) Не экспортируйте прямо из импорта.
-
-    > Почему? Несмотря на то, что запись в одну строку является краткой, разделение на отдельные строки делает вещи последовательными.
-
-    ```javascript
-    // плохо
-    // файл es6.js
-    export { es6 as default } from './AirbnbStyleGuide';
-
-    // хорошо
-    // файл es6.js
-    import { es6 } from './AirbnbStyleGuide';
-    export default es6;
-    ```
-
-  <a name="modules--no-duplicate-imports"></a>
-  - [10.4](#modules--no-duplicate-imports) Импортируйте из пути только один раз.
- eslint: [`no-duplicate-imports`](https://eslint.org/docs/rules/no-duplicate-imports)
-    > Почему? Наличие нескольких строк, которые импортируют из одного и того же файла, может сделать код неподдерживаемым.
-
-    ```javascript
-    // плохо
-    import foo from 'foo';
-    // … какие-то другие импорты … //
-    import { named1, named2 } from 'foo';
-
-    // хорошо
-    import foo, { named1, named2 } from 'foo';
-
-    // хорошо
-    import foo, {
-      named1,
-      named2,
-    } from 'foo';
-    ```
-
-  <a name="modules--no-mutable-exports"></a>
-  - [10.5](#modules--no-mutable-exports) Не экспортируйте изменяемые переменные.
- eslint: [`import/no-mutable-exports`](https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-mutable-exports.md)
-    > Почему? Вообще, следует избегать мутации, в особенности при экспорте изменяемых переменных. Несмотря на то, что эта техника может быть необходима в редких случаях, в основном только константа должна быть экспортирована.
-
-    ```javascript
-    // плохо
-    let foo = 3;
-    export { foo };
-
-    // хорошо
-    const foo = 3;
-    export { foo };
-    ```
-
-  <a name="modules--prefer-default-export"></a><a name="10.6"></a>
-  - [10.6](#modules--prefer-default-export) В модулях с единственным экспортом предпочтительнее использовать экспорт по умолчанию, а не экспорт по имени.
- eslint: [`import/prefer-default-export`](https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/prefer-default-export.md)
-    > Почему? Для того чтобы поощрять создание множества файлов, которые бы экспортировали одну сущность, т.к. это лучше для читабельности и поддержки кода.
-
-    ```javascript
-    // плохо
-    export function foo() {}
-
-    // хорошо
-    export default function foo() {}
-    ```
-
-  <a name="modules--imports-first"></a><a name="10.7"></a>
-  - [10.7](#modules--imports-first) Поместите все импорты выше остальных инструкций.
- eslint: [`import/first`](https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/first.md)
-    > Почему? Так как `import` обладает подъёмом, то хранение их всех в начале файла предотвращает от неожиданного поведения.
-
-    ```javascript
-    // плохо
-    import foo from 'foo';
-    foo.init();
-
-    import bar from 'bar';
-
-    // хорошо
-    import foo from 'foo';
-    import bar from 'bar';
-
-    foo.init();
-    ```
-
-  <a name="modules--multiline-imports-over-newlines"></a><a name="10.8"></a>
-  - [10.8](#modules--multiline-imports-over-newlines) Импорты на нескольких строках должны быть с отступами как у многострочных литералов массива и объекта.
-
-    > Почему? Фигурные скобки следуют тем же правилам отступа как и любая другая фигурная скобка блока в этом руководстве, тоже самое касается висячих запятых.
-
-    ```javascript
-    // плохо
-    import {longNameA, longNameB, longNameC, longNameD, longNameE} from 'path';
-
-    // хорошо
-    import {
-      longNameA,
-      longNameB,
-      longNameC,
-      longNameD,
-      longNameE,
-    } from 'path';
-    ```
-
-  <a name="modules--no-webpack-loader-syntax"></a><a name="10.9"></a>
-  - [10.9](#modules--no-webpack-loader-syntax) Запретите синтаксис загрузчика Webpack в импорте.
- eslint: [`import/no-webpack-loader-syntax`](https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-webpack-loader-syntax.md)
-    > Почему? Использование Webpack синтаксиса связывает код с упаковщиком модулей. Предпочтительно использовать синтаксис загрузчика в `webpack.config.js`.
-
-    ```javascript
-    // плохо
-    import fooSass from 'css!sass!foo.scss';
-    import barCss from 'style!css!bar.css';
-
-    // хорошо
-    import fooSass from 'foo.scss';
-    import barCss from 'bar.css';
-    ```
-
-**[⬆ к оглавлению](#Оглавление)**
-
-## <a name="iterators-and-generators">Итераторы и генераторы</a>
-
-  <a name="iterators--nope"></a><a name="11.1"></a>
-  - [11.1](#iterators--nope) Не используйте итераторы. Применяйте функции высшего порядка вместо таких циклов как `for-in` или `for-of`. eslint: [`no-iterator`](https://eslint.org/docs/rules/no-iterator.html) [`no-restricted-syntax`](https://eslint.org/docs/rules/no-restricted-syntax)
-
-    > Почему? Это обеспечивает соблюдение нашего правила о неизменности переменных. Работать с чистыми функциями, которые возвращают значение, проще, чем с функциями с побочными эффектами.
-
-    > Используйте `map()` / `every()` / `filter()` / `find()` / `findIndex()` / `reduce()` / `some()` / ... для итерации по массивам, а `Object.keys()` / `Object.values()` / `Object.entries()` для создания массивов, с помощью которых можно итерироваться по объектам.
-
-    ```javascript
-    const numbers = [1, 2, 3, 4, 5];
-
-    // плохо
-    let sum = 0;
-    for (let num of numbers) {
-      sum += num;
-    }
-    sum === 15;
-
-    // хорошо
-    let sum = 0;
-    numbers.forEach((num) => {
-      sum += num;
-    });
-    sum === 15;
-
-    // отлично (используйте силу функций)
-    const sum = numbers.reduce((total, num) => total + num, 0);
-    sum === 15;
-
-    // плохо
-    const increasedByOne = [];
-    for (let i = 0; i < numbers.length; i++) {
-      increasedByOne.push(numbers[i] + 1);
-    }
-
-    // хорошо
-    const increasedByOne = [];
-    numbers.forEach((num) => {
-      increasedByOne.push(num + 1);
-    });
-
-    // отлично (продолжайте в том же духе)
-    const increasedByOne = numbers.map(num => num + 1);
-    ```
-
-  <a name="generators--nope"></a><a name="11.2"></a>
-  - [11.2](#generators--nope) Не используйте пока генераторы.
-
-    > Почему? Они не очень хорошо транспилируются в ES5.
-
-  <a name="generators--spacing"></a>
-  - [11.3](#generators--spacing) Если все-таки необходимо использовать генераторы, или вы не обратили внимания на [наш совет](#generators--nope), убедитесь, что `*` у функции генератора расположена должным образом. eslint: [`generator-star-spacing`](https://eslint.org/docs/rules/generator-star-spacing)
-
-    > Почему? `function` и `*` являются частью одного и того же ключевого слова. `*` не является модификатором для `function`, `function*` является уникальной конструкцией, отличной от `function`.
-
-    ```javascript
-    // плохо
-    function * foo() {
-      // ...
-    }
-
-    const bar = function * () {
-      // ...
-    };
-
-    const baz = function *() {
-      // ...
-    };
-
-    const quux = function*() {
-      // ...
-    };
-
-    function*foo() {
-      // ...
-    }
-
-    function *foo() {
-      // ...
-    }
-
-    // очень плохо
-    function
-    *
-    foo() {
-      // ...
-    }
-
-    const wat = function
-    *
-    () {
-      // ...
-    };
-
-    // хорошо
-    function* foo() {
-      // ...
-    }
-
-    const foo = function* () {
-      // ...
-    };
     ```
 
 **[⬆ к оглавлению](#Оглавление)**
@@ -1761,105 +1212,6 @@
 
 **[⬆ к оглавлению](#Оглавление)**
 
-## <a name="hoisting">Подъем</a>
-
-  <a name="hoisting--about"></a><a name="14.1"></a>
-  - [14.1](#hoisting--about) Объявления `var` поднимаются в начало области видимости ближайшей закрывающей их функции, а их присвоение нет. Объявления `const` и `let` работают по новой концепции называемой [Временные Мёртвые Зоны (Temporal Dead Zone)](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Statements/let#Временные_мертвые_зоны_и_ошибки_при_использовании_let). Важно знать, почему использовать [typeof больше не безопасно](http://es-discourse.com/t/why-typeof-is-no-longer-safe/15).
-
-    ```javascript
-    // мы знаем, что это не будет работать
-    // (если нет глобальной переменной notDefined)
-    function example() {
-      console.log(notDefined); // => выбросит ошибку ReferenceError
-    }
-
-    // обращение к переменной до её создания
-    // будет работать из-за подъема.
-    // Примечание: значение true не поднимается.
-    function example() {
-      console.log(declaredButNotAssigned); // => undefined
-      var declaredButNotAssigned = true;
-    }
-
-    // интерпретатор понимает объявление
-    // переменной в начало области видимости.
-    // это означает, что наш пример
-    // можно переписать таким образом:
-    function example() {
-      let declaredButNotAssigned;
-      console.log(declaredButNotAssigned); // => undefined
-      declaredButNotAssigned = true;
-    }
-
-    // использование const и let
-    function example() {
-      console.log(declaredButNotAssigned); // => выбросит ошибку ReferenceError
-      console.log(typeof declaredButNotAssigned); // => выбросит ошибку ReferenceError
-      const declaredButNotAssigned = true;
-    }
-    ```
-
-  <a name="hoisting--anon-expressions"></a><a name="14.2"></a>
-  - [14.2](#hoisting--anon-expressions) Для анонимных функциональных выражений наверх области видимости поднимается название переменной, но не её значение.
-
-    ```javascript
-    function example() {
-      console.log(anonymous); // => undefined
-
-      anonymous(); // => TypeError anonymous не является функцией
-
-      var anonymous = function () {
-        console.log('anonymous function expression');
-      };
-    }
-    ```
-
-  <a name="hoisting--named-expressions"></a><a name="hoisting--named-expressions"></a><a name="14.3"></a>
-  - [14.3](#hoisting--named-expressions) Для именованных функциональных выражений наверх области видимости поднимается название переменной, но не имя или тело функции.
-
-    ```javascript
-    function example() {
-      console.log(named); // => undefined
-
-      named(); // => TypeError named не является функцией
-
-      superPower(); // => ReferenceError superPower не определена
-
-      var named = function superPower() {
-        console.log('Flying');
-      };
-    }
-
-    // тоже самое справедливо, когда имя функции
-    // совпадает с именем переменной.
-    function example() {
-      console.log(named); // => undefined
-
-      named(); // => TypeError named не является функцией
-
-      var named = function named() {
-        console.log('named');
-      };
-    }
-    ```
-
-  <a name="hoisting--declarations"></a><a name="14.4"></a>
-  - [14.4](#hoisting--declarations) При объявлении функции её имя и тело поднимаются наверх области видимости.
-
-    ```javascript
-    function example() {
-      superPower(); // => Flying
-
-      function superPower() {
-        console.log('Flying');
-      }
-    }
-    ```
-
-  - Более подробно можно прочитать в статье [JavaScript Scoping & Hoisting](http://www.adequatelygood.com/2010/2/JavaScript-Scoping-and-Hoisting/) от [Ben Cherry](http://www.adequatelygood.com/).
-
-**[⬆ к оглавлению](#Оглавление)**
-
 ## <a name="comparison-operators--equality">Операторы сравнения и равенства</a>
 
   <a name="comparison--eqeqeq"></a><a name="15.1"></a>
@@ -1881,46 +1233,8 @@
     }
     ```
 
-  <a name="comparison--shortcuts"></a><a name="15.3"></a>
-  - [15.3](#comparison--shortcuts) Используйте сокращения для булевских типов, а для строк и чисел применяйте явное сравнение.
-
-    ```javascript
-    // плохо
-    if (isValid === true) {
-      // ...
-    }
-
-    // хорошо
-    if (isValid) {
-      // ...
-    }
-
-    // плохо
-    if (name) {
-      // ...
-    }
-
-    // хорошо
-    if (name !== '') {
-      // ...
-    }
-
-    // плохо
-    if (collection.length) {
-      // ...
-    }
-
-    // хорошо
-    if (collection.length > 0) {
-      // ...
-    }
-    ```
-
-  <a name="comparison--moreinfo"></a><a name="15.4"></a>
-  - [15.4](#comparison--moreinfo) Более подробную информацию можно узнать в статье [Truth Equality and JavaScript](https://javascriptweblog.wordpress.com/2011/02/07/truth-equality-and-javascript/#more-2108) от Angus Croll.
-
-  <a name="comparison--switch-blocks"></a><a name="15.5"></a>
-  - [15.5](#comparison--switch-blocks) Используйте фигурные скобки для `case` и `default`, если они содержат лексические декларации (например, `let`, `const`, `function`, и `class`). eslint: [`no-case-declarations`](https://eslint.org/docs/rules/no-case-declarations.html).
+  <a name="comparison--switch-blocks"></a><a name="15.3"></a>
+  - [15.3](#comparison--switch-blocks) Используйте фигурные скобки для `case` и `default`, если они содержат лексические декларации (например, `let`, `const`, `function`, и `class`). eslint: [`no-case-declarations`](https://eslint.org/docs/rules/no-case-declarations.html).
 
     > Почему? Лексические декларации видны во всем `switch` блоке, но инициализируются только при присваивании, которое происходит при входе в блок `case`. Возникают проблемы, когда множество `case` пытаются определить одно и то же.
 
@@ -1967,8 +1281,8 @@
     }
     ```
 
-  <a name="comparison--nested-ternaries"></a><a name="15.6"></a>
-  - [15.6](#comparison--nested-ternaries) Тернарные операторы не должны быть вложены и в большинстве случаев должны быть расположены на одной строке. eslint: [`no-nested-ternary`](https://eslint.org/docs/rules/no-nested-ternary.html).
+  <a name="comparison--nested-ternaries"></a><a name="15.4"></a>
+  - [15.4](#comparison--nested-ternaries) Тернарные операторы не должны быть вложены и в большинстве случаев должны быть расположены на одной строке. eslint: [`no-nested-ternary`](https://eslint.org/docs/rules/no-nested-ternary.html).
 
     ```javascript
     // плохо
@@ -1987,8 +1301,8 @@
     const foo = maybe1 > maybe2 ? 'bar' : maybeNull;
     ```
 
-  <a name="comparison--unneeded-ternary"></a><a name="15.7"></a>
-  - [15.7](#comparison--unneeded-ternary) Избегайте ненужных тернарных операторов. eslint: [`no-unneeded-ternary`](https://eslint.org/docs/rules/no-unneeded-ternary.html).
+  <a name="comparison--unneeded-ternary"></a><a name="15.5"></a>
+  - [15.5](#comparison--unneeded-ternary) Избегайте ненужных тернарных операторов. eslint: [`no-unneeded-ternary`](https://eslint.org/docs/rules/no-unneeded-ternary.html).
 
     ```javascript
     // плохо
@@ -2002,8 +1316,8 @@
     const baz = !c;
     ```
 
-  <a name="comparison--no-mixed-operators"></a><a name="15.8"></a>
-  - [15.8](#comparison--no-mixed-operators) При смешивании операторов, помещайте их в круглые скобки. Единственное исключение — это стандартные арифметические операторы (`+`, `-`, `*` и `/`), так как их приоритет широко известен. eslint: [`no-mixed-operators`](https://eslint.org/docs/rules/no-mixed-operators.html)
+  <a name="comparison--no-mixed-operators"></a><a name="15.6"></a>
+  - [15.6](#comparison--no-mixed-operators) При смешивании операторов, помещайте их в круглые скобки. Единственное исключение — это стандартные арифметические операторы (`+`, `-`, `*` и `/`), так как их приоритет широко известен. eslint: [`no-mixed-operators`](https://eslint.org/docs/rules/no-mixed-operators.html)
 
     > Почему? Это улучшает читаемость и уточняет намерения разработчика.
 
