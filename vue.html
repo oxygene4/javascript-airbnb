@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Рекомендации — Vue.js</title>
+    <link href="//fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Dosis:500&amp;text=Vue.js" rel="stylesheet" type="text/css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          type="text/css">
+    <link rel="stylesheet" href="https://ru.vuejs.org/css/page.css">
+</head>
+<body>
+<div class="content style-guide with-sidebar">
+
+    <h1>Рекомендации по стилю для <br/> Vue-специфичного кода</h1>
+
+    <blockquote>
+        <p>Замечание: это руководство будет дополняться, обсуждаться и изменяться под стиль и потребности нашей команды</p>
+    </blockquote>
+
+    <h2 id="Категории-правил"><a href="#Категории-правил" class="headerlink" title="Категории правил" data-scroll="">Категории
+        правил</a></h2>
+    <h3 id="Приоритет-A-Важно"><a href="#Приоритет-A-Важно" class="headerlink" title="Приоритет A: Важно"
+                                  data-scroll="">Приоритет A: Важно</a></h3>
+    <p>Эти правила помогут предотвратить ошибки, поэтому изучите и соблюдайте их любой ценой. Исключения могут быть, но
+        должны быть очень редкими и должны выполняться только теми, у кого есть хорошие знания как JavaScript, так и
+        Vue.</p>
+    <h3 id="Приоритет-B-Настоятельно-рекомендуется"><a href="#Приоритет-B-Настоятельно-рекомендуется" class="headerlink"
+                                                       title="Приоритет B: Настоятельно рекомендуется" data-scroll="">Приоритет
+        B: Настоятельно рекомендуется</a></h3>
+    <p>Эти правила помогут улучшить читаемость и/или опыт разработки в большинстве проектов. Ваш код всё равно будет
+        работать, если вы нарушите их, но нарушения должны быть редкими и обоснованными.</p>
+    <h3 id="Приоритет-C-Рекомендуется"><a href="#Приоритет-C-Рекомендуется" class="headerlink"
+                                          title="Приоритет C: Рекомендуется" data-scroll="">Приоритет C:
+        Рекомендуется</a></h3>
+    <p>Где существует множество одинаково хороших вариантов, можно сделать собственный выбор для обеспечения
+        консистентности.</p>
+
+    <h3 id="Приоритет-D-Используйте-с-осторожностью"><a href="#Приоритет-D-Используйте-с-осторожностью"
+                                                        class="headerlink"
+                                                        title="Приоритет D: Используйте с осторожностью" data-scroll="">Приоритет
+        D: Используйте с осторожностью</a></h3>
+    <p>Некоторые возможности Vue существуют для приспосабливания к редким крайним случаям или для обеспечения более
+        плавной миграции старой кодовой базы. Однако при чрезмерном использовании они сделают ваш код более сложным в
+        поддержке или могут стать источником багов. Эти правила освещают потенциально опасные функции, объясняя, когда и
+        почему их следует избегать.</p>
+    <h2 id="Правила-приоритета-A-Важно-Предотвращение-ошибок"><a
+            href="#Правила-приоритета-A-Важно-Предотвращение-ошибок" class="headerlink"
+            title="Правила приоритета A: Важно (Предотвращение ошибок)" data-scroll="">Правила приоритета A: Важно
+        (Предотвращение ошибок)</a></h2>
+    <h3 id="Имена-компонентов-из-нескольких-слов-важно"><a href="#Имена-компонентов-из-нескольких-слов-важно"
+                                                           class="headerlink"
+                                                           title="Имена компонентов из нескольких слов важно"
+                                                           data-scroll="">Имена компонентов из нескольких слов <sup
+            data-p="a">важно</sup></a></h3>
+    <p><strong>Имена компонентов должны всегда состоять из нескольких слов, за исключением корневого компонента <code>App</code>
+        и встроенных компонентов самого Vue, например, <code>&lt;transition&gt;</code> или
+        <code>&lt;component&gt;</code>.</strong></p>
+    <p>Это <a href="http://w3c.github.io/webcomponents/spec/custom/#valid-custom-element-name" target="_blank"
+              rel="noopener">предотвращает конфликты</a> с существующими или будущими HTML-элементами, поскольку все
+        HTML-элементы именуются одним словом.</p>
+    <div class="style-example example-bad">
+        <h4 id="Плохо"><a href="#Плохо" class="headerlink" title="Плохо"></a>Плохо</h4>
+        <pre><code class="hljs js">Vue.component(<span class="hljs-string">'todo'</span>, {
+  <span class="hljs-comment">// ...</span>
+})</code></pre>
+        <pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {
+  <span class="hljs-attr">name</span>: <span class="hljs-string">'Todo'</span>
+  <span class="hljs-comment">// ...</span>
+}</code></pre>
+    </div>
+    <div class="style-example example-good">
+        <h4 id="Хорошо"><a href="#Хорошо" class="headerlink" title="Хорошо"></a>Хорошо</h4>
+        <pre><code class="hljs js">Vue.component(<span class="hljs-string">'todo-item'</span>, {
+  <span class="hljs-comment">// ...</span>
+})</code></pre>
+        <pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {
+  <span class="hljs-attr">name</span>: <span class="hljs-string">'TodoItem'</span>
+  <span class="hljs-comment">// ...</span>
+}</code></pre>
+    </div>
+
+
+
+
+
+
+    <h3 id="Данные-компонента-важно"><a href="#Данные-компонента-важно" class="headerlink"
+                                        title="Данные компонента важно" data-scroll="">Данные компонента <sup
+            data-p="a">важно</sup></a></h3>
+    <p><strong>Свойство <code>data</code> компонента должно быть функцией.</strong></p>
+    <p>При использовании свойства <code>data</code> в компоненте (т.е. везде, за исключением <code>new Vue</code>),
+        значением всегда должна быть функция, возвращающая объект.</p>
+
+
+    <details>
+        <summary>
+            <h4>Подробное объяснение</h4>
+        </summary>
+
+        <p>Когда значением <code>data</code> будет объект, он будет использован для всех экземпляров компонента.
+            Представьте, например, компонент <code>TodoList</code> с таким набором данных:</p>
+        <pre><code class="hljs js">data: {
+  <span class="hljs-attr">listTitle</span>: <span class="hljs-string">''</span>,
+  <span class="hljs-attr">todos</span>: []
+}</code></pre>
+        <p>Мы можем захотеть повторно использовать этот компонент, позволяя пользователям использовать несколько списков
+            (например, для покупок, списков желаний, ежедневных дел и т.п.). Однако есть проблема. Поскольку каждый
+            экземпляр компонента ссылается на один и тот же объект данных, изменение названия одного списка также
+            изменит заголовок всех остальных списков. То же самое случится и при добавлении/изменении/удалении элемента
+            списка.</p>
+        <p>Вместо этого мы хотим, чтобы каждый экземпляр компонента управлял только своими собственными данными. Чтобы
+            этого добиться, каждый экземпляр должен сгенерировать собственный уникальный объект данных. В JavaScript
+            этого возможно достигнуть, возвращая объект из функции:</p>
+        <pre><code class="hljs js">data: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span
+                class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">listTitle</span>: <span class="hljs-string">''</span>,
+    <span class="hljs-attr">todos</span>: []
+  }
+}</code></pre>
+    </details>
+    <div class="style-example example-bad">
+        <h4 id="Плохо-1"><a href="#Плохо-1" class="headerlink" title="Плохо"></a>Плохо</h4>
+        <pre><code class="hljs js">Vue.component(<span class="hljs-string">'some-comp'</span>, {
+  <span class="hljs-attr">data</span>: {
+    <span class="hljs-attr">foo</span>: <span class="hljs-string">'bar'</span>
+  }
+})</code></pre>
+        <pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {
+  <span class="hljs-attr">data</span>: {
+    <span class="hljs-attr">foo</span>: <span class="hljs-string">'bar'</span>
+  }
+}</code></pre>
+    </div>
+    <div class="style-example example-good">
+        <h4 id="Хорошо-1"><a href="#Хорошо-1" class="headerlink" title="Хорошо"></a>Хорошо</h4>
+        <pre><code class="hljs js">Vue.component(<span class="hljs-string">'some-comp'</span>, {
+  <span class="hljs-attr">data</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span
+                    class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> {
+      <span class="hljs-attr">foo</span>: <span class="hljs-string">'bar'</span>
+    }
+  }
+})</code></pre>
+        <pre><code class="hljs js"><span class="hljs-comment">// В .vue-файле</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {
+  data() {
+    <span class="hljs-keyword">return</span> {
+      <span class="hljs-attr">foo</span>: <span class="hljs-string">'bar'</span>
+    }
+  }
+}</code></pre>
+        <pre><code class="hljs js"><span class="hljs-comment">// Допускается использовать объект напрямую</span>
+<span class="hljs-comment">// в корневом экземпляре Vue, поскольку только</span>
+<span class="hljs-comment">// один экземпляр будет существовать.</span>
+<span class="hljs-keyword">new</span> Vue({
+  <span class="hljs-attr">data</span>: {
+    <span class="hljs-attr">foo</span>: <span class="hljs-string">'bar'</span>
+  }
+})</code></pre>
+    </div>
+
+
+
+
+
+
+    <h3 id="Определение-входных-параметров-важно"><a href="#Определение-входных-параметров-важно" class="headerlink"
+                                                     title="Определение входных параметров важно" data-scroll="">Определение
+        входных параметров <sup data-p="a">важно</sup></a></h3>
+    <p><strong>Входные параметры должны быть определены как можно более подробно.</strong></p>
+    <p>В готовом коде определение входных параметров всегда должно быть максимально подробным, по крайней мере определяя
+        тип данных.</p>
+
+
+    <details>
+        <summary>
+            <h4>Подробное объяснение</h4>
+        </summary>
+
+        <p>Подробное определение входных параметров имеет два преимущества:</p>
+        <ul>
+            <li>Документирование API компонента, что позволит легко понимать, как этот компонент должен
+                использоваться.
+            </li>
+            <li>При разработке, Vue будет предупреждать вас, если компоненту были переданы входные параметры
+                неправильного формата, позволяя вам отловить и исправить потенциальные источники ошибок.
+            </li>
+        </ul>
+    </details>
+    <div class="style-example example-bad">
+        <h4 id="Плохо-2"><a href="#Плохо-2" class="headerlink" title="Плохо"></a>Плохо</h4>
+        <pre><code class="hljs js"><span class="hljs-comment">// Этого достаточно лишь для прототипа</span>
+props: [<span class="hljs-string">'status'</span>]</code></pre>
+    </div>
+    <div class="style-example example-good">
+        <h4 id="Хорошо-2"><a href="#Хорошо-2" class="headerlink" title="Хорошо"></a>Хорошо</h4>
+        <pre><code class="hljs js">props: {
+  <span class="hljs-attr">status</span>: <span class="hljs-built_in">String</span>
+}</code></pre>
+        <pre><code class="hljs js"><span class="hljs-comment">// Ещё лучше!</span>
+props: {
+  <span class="hljs-attr">status</span>: {
+    <span class="hljs-attr">type</span>: <span class="hljs-built_in">String</span>,
+    <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">validator</span>: <span class="hljs-function"><span
+                    class="hljs-keyword">function</span> (<span class="hljs-params">value</span>) </span>{
+      <span class="hljs-keyword">return</span> [
+        <span class="hljs-string">'syncing'</span>,
+        <span class="hljs-string">'synced'</span>,
+        <span class="hljs-string">'version-conflict'</span>,
+        <span class="hljs-string">'error'</span>
+      ].indexOf(value) !== <span class="hljs-number">-1</span>
+    }
+  }
+}</code></pre>
+    </div>
+
+
+
+
+
+    <h3 id="Уникальные-ключи-для-v-for-важно"><a href="#Уникальные-ключи-для-v-for-важно" class="headerlink"
+                                                 title="Уникальные ключи для v-for важно" data-scroll="">Уникальные
+        ключи для <code>v-for</code> <sup data-p="a">важно</sup></a></h3>
+    <p><strong>Всегда используйте <code>key</code> с <code>v-for</code>.</strong></p>
+    <p><code>key</code> с <code>v-for</code> <em>всегда</em> обязателен для компонентов, для поддержания внутреннего
+        состояния компонента и его поддерева. Даже для элементов это хорошая практика для поддержания предсказуемого
+        поведения, такого как <a href="https://bost.ocks.org/mike/constancy/" target="_blank" rel="noopener">консистентности
+            объекта</a> в анимации.</p>
+
+
+    <details>
+        <summary>
+            <h4>Подробное объяснение</h4>
+        </summary>
+
+        <p>Представим, что у нас есть список различных todo:</p>
+        <pre><code class="hljs js">data: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span
+                class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">todos</span>: [
+      {
+        <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>,
+        <span class="hljs-attr">text</span>: <span class="hljs-string">'Изучить, как использовать v-for'</span>
+      },
+      {
+        <span class="hljs-attr">id</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">text</span>: <span class="hljs-string">'Изучить, как использовать key'</span>
+      }
+    ]
+  }
+}</code></pre>
+        <p>Затем вы сортируете их по алфавиту. При обновлении DOM, Vue будет оптимизировать отрисовку для выполнения
+            самых дешёвых изменений DOM. Это может означать удаление первого элемента списка, а затем добавление его
+            снова в конце списка.</p>
+        <p>Проблема в том, что бывают случаи, когда важно не удалять элементы, которые останутся в DOM. Например, вы
+            можете использовать <code>&lt;transition-group&gt;</code> для анимации сортировки списка, или удержании
+            фокуса, если отображаемый элемент является <code>&lt;input&gt;</code>. В этих случаях добавление уникального
+            ключа для каждого элемента (например, <code>:key="todo.id"</code>) подскажет Vue, как вести себя более
+            предсказуемо.</p>
+        <p>По нашему опыту, лучше <em>всегда</em> добавлять уникальный ключ, чтобы вам и вашей команде никогда не
+            приходилось беспокоиться об этих крайних случаях. Затем в редких критически зависимых от производительности
+            случаях, когда консистентность объекта не требуется — вы можете сделать сознательное исключение.</p>
+    </details>
+    <div class="style-example example-bad">
+        <h4 id="Плохо-3"><a href="#Плохо-3" class="headerlink" title="Плохо"></a>Плохо</h4>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span
+          class="hljs-string">"todo in todos"</span>&gt;</span>
+    {{ todo.text }}
+  <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></code></pre>
+    </div>
+    <div class="style-example example-good">
+        <h4 id="Хорошо-3"><a href="#Хорошо-3" class="headerlink" title="Хорошо"></a>Хорошо</h4>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>
+    <span class="hljs-attr">v-for</span>=<span class="hljs-string">"todo in todos"</span>
+    <span class="hljs-attr">:key</span>=<span class="hljs-string">"todo.id"</span>
+  &gt;</span>
+    {{ todo.text }}
+  <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></code></pre>
+    </div>
+
+
+
+
+
+
+    <h3 id="Избегайте-использования-v-if-с-v-for-важно"><a href="#Избегайте-использования-v-if-с-v-for-важно"
+                                                           class="headerlink"
+                                                           title="Избегайте использования v-if с v-for важно"
+                                                           data-scroll="">Избегайте использования <code>v-if</code> с
+        <code>v-for</code> <sup data-p="a">важно</sup></a></h3>
+    <p><strong>Никогда не используйте <code>v-if</code> на том же элементе, что и <code>v-for</code>.</strong></p>
+    <p>Есть два распространённых случая, когда это может быть заманчиво:</p>
+    <ul>
+        <li><p>Чтобы фильтровать элементы списка (например, <code>v-for="user in users" v-if="user.isActive"</code>). В
+            этих случаях замените <code>users</code> новым вычисляемым свойством, которое возвращает ваш отфильтрованный
+            список (например, <code>activeUsers</code>).</p>
+        </li>
+        <li><p>Чтобы избежать отображения списка, если он должен быть скрыт (например, <code>v-for="user in users"
+            v-if="shouldShowUsers"</code>). В этих случаях переместите <code>v-if</code> выше, в элемент контейнера
+            (например, <code>ul</code>, <code>ol</code>).</p>
+        </li>
+    </ul>
+
+
+    <details>
+        <summary>
+            <h4>Подробное объяснение</h4>
+        </summary>
+
+        <p>Когда Vue обрабатывает директивы, <code>v-for</code> имеет более высокий приоритет, чем <code>v-if</code>,
+            поэтому такой шаблон:</p>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>
+    <span class="hljs-attr">v-for</span>=<span class="hljs-string">"user in users"</span>
+    <span class="hljs-attr">v-if</span>=<span class="hljs-string">"user.isActive"</span>
+    <span class="hljs-attr">:key</span>=<span class="hljs-string">"user.id"</span>
+  &gt;</span>
+    {{ user.name }}
+  <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></code></pre>
+        <p>Будет аналогичен подобному:</p>
+        <pre><code class="hljs js"><span class="hljs-keyword">this</span>.users.map(<span class="hljs-function"><span
+                class="hljs-keyword">function</span>(<span class="hljs-params">user</span>) </span>{
+  <span class="hljs-keyword">if</span> (user.isActive) {
+    <span class="hljs-keyword">return</span> user.name
+  }
+})</code></pre>
+        <p>Таким образом, даже если мы показываем элементы только для небольшой части пользователей, мы должны
+            перебирать весь список при каждом повторной отрисовке, независимо от того, изменился ли набор активных
+            пользователей.</p>
+        <p>Заменив это отображением вычисляемого свойства, подобным такому:</p>
+        <pre><code class="hljs js">computed: {
+  <span class="hljs-attr">activeUsers</span>: <span class="hljs-function"><span
+                    class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.users.filter(<span
+                    class="hljs-function"><span class="hljs-keyword">function</span> (<span
+                    class="hljs-params">user</span>) </span>{
+      <span class="hljs-keyword">return</span> user.isActive
+    })
+  }
+}</code></pre>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>
+    <span class="hljs-attr">v-for</span>=<span class="hljs-string">"user in activeUsers"</span>
+    <span class="hljs-attr">:key</span>=<span class="hljs-string">"user.id"</span>
+  &gt;</span>
+    {{ user.name }}
+  <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></code></pre>
+        <p>Мы получаем следующие преимущества:</p>
+        <ul>
+            <li>Отфильтрованный список будет вычисляться повторно <em>только</em> при изменениях в массиве
+                <code>users</code>, что делает фильтрацию более эффективной.
+            </li>
+            <li>Используя <code>v-for="user in activeUsers"</code>, на этапе отрисовки мы итерируем <em>только</em>
+                активных пользователей, что сделает отрисовку намного более эффективным.
+            </li>
+            <li>Логика теперь отделена от уровня представления, что значительно упростит дальнейшую поддержку кода
+                (изменение/расширение логики).
+            </li>
+        </ul>
+        <p>Мы получаем такие же преимущества обновив подобное:</p>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>
+    <span class="hljs-attr">v-for</span>=<span class="hljs-string">"user in users"</span>
+    <span class="hljs-attr">v-if</span>=<span class="hljs-string">"shouldShowUsers"</span>
+    <span class="hljs-attr">:key</span>=<span class="hljs-string">"user.id"</span>
+  &gt;</span>
+    {{ user.name }}
+  <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></code></pre>
+        <p>до такого:</p>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span
+                class="hljs-attr">v-if</span>=<span class="hljs-string">"shouldShowUsers"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>
+    <span class="hljs-attr">v-for</span>=<span class="hljs-string">"user in users"</span>
+    <span class="hljs-attr">:key</span>=<span class="hljs-string">"user.id"</span>
+  &gt;</span>
+    {{ user.name }}
+  <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></code></pre>
+        <p>Перемещая <code>v-if</code> в элемент контейнера, мы больше не проверяем <code>shouldShowUsers</code> для
+            <em>каждого</em> пользователя в списке. Вместо этого мы проверяем его один раз и даже не выполняем <code>v-for</code>
+            если значение <code>shouldShowUsers</code> будет false.</p>
+    </details>
+    <div class="style-example example-bad">
+        <h4 id="Плохо-4"><a href="#Плохо-4" class="headerlink" title="Плохо"></a>Плохо</h4>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>
+    <span class="hljs-attr">v-for</span>=<span class="hljs-string">"user in users"</span>
+    <span class="hljs-attr">v-if</span>=<span class="hljs-string">"user.isActive"</span>
+    <span class="hljs-attr">:key</span>=<span class="hljs-string">"user.id"</span>
+  &gt;</span>
+    {{ user.name }}
+  <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></code></pre>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>
+    <span class="hljs-attr">v-for</span>=<span class="hljs-string">"user in users"</span>
+    <span class="hljs-attr">v-if</span>=<span class="hljs-string">"shouldShowUsers"</span>
+    <span class="hljs-attr">:key</span>=<span class="hljs-string">"user.id"</span>
+  &gt;</span>
+    {{ user.name }}
+  <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></code></pre>
+    </div>
+    <div class="style-example example-good">
+        <h4 id="Хорошо-4"><a href="#Хорошо-4" class="headerlink" title="Хорошо"></a>Хорошо</h4>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>
+    <span class="hljs-attr">v-for</span>=<span class="hljs-string">"user in activeUsers"</span>
+    <span class="hljs-attr">:key</span>=<span class="hljs-string">"user.id"</span>
+  &gt;</span>
+    {{ user.name }}
+  <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></code></pre>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span
+                class="hljs-attr">v-if</span>=<span class="hljs-string">"shouldShowUsers"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>
+    <span class="hljs-attr">v-for</span>=<span class="hljs-string">"user in users"</span>
+    <span class="hljs-attr">:key</span>=<span class="hljs-string">"user.id"</span>
+  &gt;</span>
+    {{ user.name }}
+  <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></code></pre>
+    </div>
+
+
+
+
+
+
+    <h3 id="Именование-приватных-свойств-важно"><a href="#Именование-приватных-свойств-важно" class="headerlink"
+                                                   title="Именование приватных свойств важно" data-scroll="">Именование
+        приватных свойств <sup data-p="a">важно</sup></a></h3>
+    <p><strong>Используйте область видимости модуля, чтобы приватные функции были недоступны извне. Если это невозможно,
+        всегда используйте префикс <code>$_</code> для пользовательских приватных свойств в плагине, примеси и т.п.
+        Таким образом, они не рассматриваться как публичный API-интерфейс. Затем, чтобы избежать конфликтов с кодом
+        других авторов, также включайте именованную область (например, <code>$_yourPluginName_</code>).</strong></p>
+
+
+    <details>
+        <summary>
+            <h4>Подробное объяснение</h4>
+        </summary>
+
+        <p>Vue использует префикс <code>_</code> для определения собственных приватных свойств, поэтому использование
+            одного и того же префикса (например, <code>_update</code>) может привести к перезаписи свойства экземпляра.
+            Даже если вы проверяете и Vue в настоящее время не использует определённое имя свойства, нет гарантий, что
+            конфликт не возникнет в более поздних версиях.</p>
+        <p>Что касается префикса <code>$</code>, то в рамках экосистемы Vue это специальные свойства экземпляра, которые
+            публично доступны пользователю, поэтому использование его для <em>приватных</em> свойств было бы
+            нецелесообразным.</p>
+        <p>Вместо этого мы рекомендуем комбинировать два префикса в <code>$_</code>, как соглашение для пользовательских
+            приватных свойств, которые гарантируют отсутствие конфликтов с Vue.</p>
+    </details>
+    <div class="style-example example-bad">
+        <h4 id="Плохо-6"><a href="#Плохо-6" class="headerlink" title="Плохо"></a>Плохо</h4>
+        <pre><code class="hljs js"><span class="hljs-keyword">var</span> myGreatMixin = {
+  <span class="hljs-comment">// ...</span>
+  methods: {
+    <span class="hljs-attr">update</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span
+                    class="hljs-params"></span>) </span>{
+      <span class="hljs-comment">// ...</span>
+    }
+  }
+}</code></pre>
+        <pre><code class="hljs js"><span class="hljs-keyword">var</span> myGreatMixin = {
+  <span class="hljs-comment">// ...</span>
+  methods: {
+    <span class="hljs-attr">_update</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span
+                    class="hljs-params"></span>) </span>{
+      <span class="hljs-comment">// ...</span>
+    }
+  }
+}</code></pre>
+        <pre><code class="hljs js"><span class="hljs-keyword">var</span> myGreatMixin = {
+  <span class="hljs-comment">// ...</span>
+  methods: {
+    <span class="hljs-attr">$update</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span
+                    class="hljs-params"></span>) </span>{
+      <span class="hljs-comment">// ...</span>
+    }
+  }
+}</code></pre>
+        <pre><code class="hljs js"><span class="hljs-keyword">var</span> myGreatMixin = {
+  <span class="hljs-comment">// ...</span>
+  methods: {
+    <span class="hljs-attr">$_update</span>: <span class="hljs-function"><span
+                    class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-comment">// ...</span>
+    }
+  }
+}</code></pre>
+    </div>
+    <div class="style-example example-good">
+        <h4 id="Хорошо-6"><a href="#Хорошо-6" class="headerlink" title="Хорошо"></a>Хорошо</h4>
+        <pre><code class="hljs js"><span class="hljs-keyword">var</span> myGreatMixin = {
+  <span class="hljs-comment">// ...</span>
+  methods: {
+    <span class="hljs-attr">$_myGreatMixin_update</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span
+                    class="hljs-params"></span>) </span>{
+      <span class="hljs-comment">// ...</span>
+    }
+  }
+}</code></pre>
+        <pre><code class="hljs js"><span class="hljs-comment">// Ещё лучше!</span>
+<span class="hljs-keyword">var</span> myGreatMixin = {
+  <span class="hljs-comment">// ...</span>
+  methods: {
+    publicMethod() {
+      <span class="hljs-comment">// ...</span>
+      myPrivateFunction()
+    }
+  }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">myPrivateFunction</span>(<span
+        class="hljs-params"></span>) </span>{
+  <span class="hljs-comment">// ...</span>
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> myGreatMixin</code></pre>
+    </div>
+    <h2 id="Правила-приоритета-B-Настоятельно-рекомендуется-Улучшение-читаемости"><a
+            href="#Правила-приоритета-B-Настоятельно-рекомендуется-Улучшение-читаемости" class="headerlink"
+            title="Правила приоритета B: Настоятельно рекомендуется (Улучшение читаемости)" data-scroll="">Правила
+        приоритета B: Настоятельно рекомендуется (Улучшение читаемости)</a></h2>
+    <h3 id="Файлы-компонентов-настоятельно-рекомендуется"><a href="#Файлы-компонентов-настоятельно-рекомендуется"
+                                                             class="headerlink"
+                                                             title="Файлы компонентов настоятельно рекомендуется"
+                                                             data-scroll="">Файлы компонентов <sup data-p="b">настоятельно
+        рекомендуется</sup></a></h3>
+    <p><strong>Всякий раз, когда система сборки позволяет конкатенировать файлы, каждый компонент должен быть в
+        собственном файле.</strong></p>
+    <p>Это поможет вам быстрее найти компонент, когда потребуется его отредактировать или просмотреть как его
+        использовать.</p>
+    <div class="style-example example-bad">
+        <h4 id="Плохо-7"><a href="#Плохо-7" class="headerlink" title="Плохо"></a>Плохо</h4>
+        <pre><code class="hljs js">Vue.component(<span class="hljs-string">'TodoList'</span>, {
+  <span class="hljs-comment">// ...</span>
+})
+
+Vue.component(<span class="hljs-string">'TodoItem'</span>, {
+  <span class="hljs-comment">// ...</span>
+})</code></pre>
+    </div>
+    <div class="style-example example-good">
+        <h4 id="Хорошо-7"><a href="#Хорошо-7" class="headerlink" title="Хорошо"></a>Хорошо</h4>
+        <pre><code class="hljs undefined">components/
+|- TodoList.js
+|- TodoItem.js</code></pre>
+        <pre><code class="hljs undefined">components/
+|- TodoList.vue
+|- TodoItem.vue</code></pre>
+    </div>
+    <h3 id="Именование-однофайловых-компонентов-настоятельно-рекомендуется"><a
+            href="#Именование-однофайловых-компонентов-настоятельно-рекомендуется" class="headerlink"
+            title="Именование однофайловых компонентов настоятельно рекомендуется" data-scroll="">Именование
+        однофайловых компонентов <sup data-p="b">настоятельно рекомендуется</sup></a></h3>
+    <p><strong>Имена файлов однофайловых компонентов должны быть
+        всегда в PascalCase или всегда в kebab-case.</strong></p>
+    <p>PascalCase лучше всего работает с автодополнением в редакторах кода, поскольку он согласуется с тем, как мы
+        ссылаемся на компоненты в JS(X) и шаблонах. Тем не менее, смешанные имена файлов иногда могут создавать проблемы
+        для нечувствительных к регистру файловых систем, поэтому kebab-case также вполне приемлем.</p>
+    <div class="style-example example-bad">
+        <h4 id="Плохо-8"><a href="#Плохо-8" class="headerlink" title="Плохо"></a>Плохо</h4>
+        <pre><code class="hljs undefined">components/
+|- mycomponent.vue</code></pre>
+        <pre><code class="hljs undefined">components/
+|- myComponent.vue</code></pre>
+    </div>
+    <div class="style-example example-good">
+        <h4 id="Хорошо-8"><a href="#Хорошо-8" class="headerlink" title="Хорошо"></a>Хорошо</h4>
+        <pre><code class="hljs undefined">components/
+|- MyComponent.vue</code></pre>
+        <pre><code class="hljs undefined">components/
+|- my-component.vue</code></pre>
+    </div>
+    <h3 id="Именование-базовых-компонентов-настоятельно-рекомендуется"><a
+            href="#Именование-базовых-компонентов-настоятельно-рекомендуется" class="headerlink"
+            title="Именование базовых компонентов настоятельно рекомендуется" data-scroll="">Именование базовых
+        компонентов <sup data-p="b">настоятельно рекомендуется</sup></a></h3>
+    <p><strong>Базовые компоненты (известные как презентационные, глупые или чистые компоненты) которые применяют
+        специфичные для вашего приложения стили или соглашения должны начинаться с определённого префикса, такого как
+        <code>Base</code>, <code>App</code> или <code>V</code>.</strong></p>
+
+
+    <details>
+        <summary>
+            <h4>Подробное объяснение</h4>
+        </summary>
+
+        <p>Эти компоненты закладывают основу для консистентности стилей и поведения в вашем приложении. Они могут
+            содержать <strong>только</strong>:</p>
+        <ul>
+            <li>HTML-элементы,</li>
+            <li>другие базовые компоненты</li>
+            <li>сторонние UI-компоненты.</li>
+        </ul>
+        <p>Но они <strong>никогда</strong> не содержат глобальное состояние (например, из хранилища Vuex).</p>
+        <p>Их имена зачастую содержат название элемента, который они оборачивают (например, <code>BaseButton</code>,
+            <code>BaseTable</code>), если не существует элемента для этих конкретных целей (например,
+            <code>BaseIcon</code>). Если вы создадите похожие компоненты для более специфичного контекста, они почти
+            всегда будут поглощать эти компоненты (например, <code>BaseButton</code> может использоваться в <code>ButtonSubmit</code>).
+        </p>
+        <p>Некоторые преимущества этого соглашения:</p>
+        <ul>
+            <li><p>Когда они организованы в алфавитном порядке в редакторе, базовые компоненты вашего приложения будут
+                перечислены вместе, что упрощает их идентификацию.</p>
+            </li>
+            <li><p>Поскольку имена компонентов всегда должны состоять из нескольких слов, это соглашение запрещает вам
+                выбирать произвольный префикс для простых компонентов-обёрток (например, <code>MyButton</code>, <code>VueButton</code>).
+            </p>
+            </li>
+            <li><p>Поскольку эти компоненты часто используются, вы можете просто сделать их глобальными, а не
+                импортировать их повсюду. Префикс делает это возможным с помощью Webpack:</p>
+                <pre><code class="hljs js"><span class="hljs-keyword">var</span> requireComponent = <span
+                        class="hljs-built_in">require</span>.context(<span class="hljs-string">'./src'</span>, <span
+                        class="hljs-literal">true</span>, /^Base[A-Z]/)
+requireComponent.keys().forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span
+                            class="hljs-params">fileName</span>) </span>{
+  <span class="hljs-keyword">var</span> baseComponentConfig = requireComponent(fileName)
+  baseComponentConfig = baseComponentConfig.default || baseComponentConfig
+  <span class="hljs-keyword">var</span> baseComponentName = baseComponentConfig.name || (
+    fileName
+      .replace(<span class="hljs-regexp">/^.+\//</span>, <span class="hljs-string">''</span>)
+      .replace(<span class="hljs-regexp">/\.\w+$/</span>, <span class="hljs-string">''</span>)
+  )
+  Vue.component(baseComponentName, baseComponentConfig)
+})</code></pre>
+            </li>
+        </ul>
+    </details>
+    <div class="style-example example-bad">
+        <h4 id="Плохо-9"><a href="#Плохо-9" class="headerlink" title="Плохо"></a>Плохо</h4>
+        <pre><code class="hljs undefined">components/
+|- MyButton.vue
+|- VueTable.vue
+|- Icon.vue</code></pre>
+    </div>
+    <div class="style-example example-good">
+        <h4 id="Хорошо-9"><a href="#Хорошо-9" class="headerlink" title="Хорошо"></a>Хорошо</h4>
+        <pre><code class="hljs undefined">components/
+|- BaseButton.vue
+|- BaseTable.vue
+|- BaseIcon.vue</code></pre>
+        <pre><code class="hljs undefined">components/
+|- AppButton.vue
+|- AppTable.vue
+|- AppIcon.vue</code></pre>
+        <pre><code class="hljs undefined">components/
+|- VButton.vue
+|- VTable.vue
+|- VIcon.vue</code></pre>
+    </div>
+    <h3 id="Именование-компонентов-используемых-в-единственном-экземпляре-настоятельно-рекомендуется"><a
+            href="#Именование-компонентов-используемых-в-единственном-экземпляре-настоятельно-рекомендуется"
+            class="headerlink"
+            title="Именование компонентов, используемых в единственном экземпляре настоятельно рекомендуется"
+            data-scroll="">Именование компонентов, используемых в единственном экземпляре <sup data-p="b">настоятельно
+        рекомендуется</sup></a></h3>
+    <p><strong>Компоненты, которые должны иметь только один активный экземпляр, следует начинать именовать с префикса
+        <code>The</code>, обозначая таким образом что он может быть только один.</strong></p>
+    <p>Это не означает, что компонент используется только на одной странице, но означает что он будет использоваться
+        только один раз <em>на странице</em>. Эти компоненты никогда не принимают каких-либо входных параметров,
+        поскольку они специфичны для вашего приложения, а не их контекста в вашем приложении. Если вы обнаружите
+        необходимость добавления входных параметров, это хороший признак того, что на самом деле этот компонент для
+        многократного использования, который используется только один раз на странице <em>в данный момент</em>.</p>
+    <div class="style-example example-bad">
+        <h4 id="Плохо-10"><a href="#Плохо-10" class="headerlink" title="Плохо"></a>Плохо</h4>
+        <pre><code class="hljs undefined">components/
+|- Heading.vue
+|- MySidebar.vue</code></pre>
+    </div>
+    <div class="style-example example-good">
+        <h4 id="Хорошо-10"><a href="#Хорошо-10" class="headerlink" title="Хорошо"></a>Хорошо</h4>
+        <pre><code class="hljs undefined">components/
+|- TheHeading.vue
+|- TheSidebar.vue</code></pre>
+    </div>
+    <h3 id="Именование-тесно-связанных-компонентов-настоятельно-рекомендуется"><a
+            href="#Именование-тесно-связанных-компонентов-настоятельно-рекомендуется" class="headerlink"
+            title="Именование тесно связанных компонентов настоятельно рекомендуется" data-scroll="">Именование тесно
+        связанных компонентов <sup data-p="b">настоятельно рекомендуется</sup></a></h3>
+    <p><strong>Дочерние компоненты, тесно связанные с родителями, должны включать имя родительского компонента в
+        качестве префикса.</strong></p>
+    <p>Если компонент имеет смысл только в контексте одного родительского компонента, то это отношение должно быть
+        очевидным в его имени. Поскольку редакторы обычно упорядочивают файлы по алфавиту, это также расположит
+        связанные файлы друг с другом.</p>
+
+
+    <details>
+        <summary>
+            <h4>Подробное объяснение</h4>
+        </summary>
+
+        <p>Возможно вы захотите решить эту проблему, вложив дочерние компоненты в каталоги, названные в честь их
+            родителя. Например:</p>
+        <pre><code class="hljs undefined">components/
+|- TodoList/
+   |- Item/
+      |- index.vue
+      |- Button.vue
+   |- index.vue</code></pre>
+        <p>или:</p>
+        <pre><code class="hljs undefined">components/
+|- TodoList/
+   |- Item/
+      |- Button.vue
+   |- Item.vue
+|- TodoList.vue</code></pre>
+        <p>Это не рекомендуется, так как это приводит к:</p>
+        <ul>
+            <li>Множеству файлов с похожими именами, что затрудняет быстрое переключение между файлами в редакторе
+                кода.
+            </li>
+            <li>Множеству подкаталогов, что увеличивает время необходимое на изучение списка компонентов в боковой
+                панели редактора.
+            </li>
+        </ul>
+    </details>
+    <div class="style-example example-bad">
+        <h4 id="Плохо-11"><a href="#Плохо-11" class="headerlink" title="Плохо"></a>Плохо</h4>
+        <pre><code class="hljs undefined">components/
+|- TodoList.vue
+|- TodoItem.vue
+|- TodoButton.vue</code></pre>
+        <pre><code class="hljs undefined">components/
+|- SearchSidebar.vue
+|- NavigationForSearchSidebar.vue</code></pre>
+    </div>
+    <div class="style-example example-good">
+        <h4 id="Хорошо-11"><a href="#Хорошо-11" class="headerlink" title="Хорошо"></a>Хорошо</h4>
+        <pre><code class="hljs undefined">components/
+|- TodoList.vue
+|- TodoListItem.vue
+|- TodoListItemButton.vue</code></pre>
+        <pre><code class="hljs undefined">components/
+|- SearchSidebar.vue
+|- SearchSidebarNavigation.vue</code></pre>
+    </div>
+    <h3 id="Порядок-слов-в-именах-компонентов-настоятельно-рекомендуется"><a
+            href="#Порядок-слов-в-именах-компонентов-настоятельно-рекомендуется" class="headerlink"
+            title="Порядок слов в именах компонентов настоятельно рекомендуется" data-scroll="">Порядок слов в именах
+        компонентов <sup data-p="b">настоятельно рекомендуется</sup></a></h3>
+    <p><strong>Компоненты должны именоваться с высшего уровня (часто наиболее общих слов) и заканчиваться описательными
+        дополняющими словами.</strong></p>
+
+
+    <details>
+        <summary>
+            <h4>Подробное объяснение</h4>
+        </summary>
+
+        <p>Вам может быть интересно:</p>
+        <blockquote>
+            <p>«Почему мы заставляем называть компоненты менее естественным языком?»</p>
+        </blockquote>
+        <p>На естественном английском прилагательные и другие дескрипторы обычно располагаются перед существительными, в
+            то время как исключения требуют слов-соединителей. Например:</p>
+        <ul>
+            <li>Coffee <em>with</em> milk</li>
+            <li>Soup <em>of the</em> day</li>
+            <li>Visitor <em>to the</em> museum</li>
+        </ul>
+        <p>Вы определённо можете включать эти слова-соединители в именах компонентах если хотите, но порядок всё ещё
+            важен.</p>
+        <p>Также обратите внимание, <strong>то что считается «высоким уровнем» будет относиться к вашему
+            приложению</strong>. Например, представьте приложение с формой для поиска. Оно может содержать компоненты
+            наподобие таких:</p>
+        <pre><code class="hljs undefined">components/
+|- ClearSearchButton.vue
+|- ExcludeFromSearchInput.vue
+|- LaunchOnStartupCheckbox.vue
+|- RunSearchButton.vue
+|- SearchInput.vue
+|- TermsCheckbox.vue</code></pre>
+        <p>Как вы могли заметить, довольно сложно понять, какие из компонентов относятся к поиску. Давайте теперь
+            переименуем компоненты в соответствии с правилом:</p>
+        <pre><code class="hljs undefined">components/
+|- SearchButtonClear.vue
+|- SearchButtonRun.vue
+|- SearchInputExcludeGlob.vue
+|- SearchInputQuery.vue
+|- SettingsCheckboxLaunchOnStartup.vue
+|- SettingsCheckboxTerms.vue</code></pre>
+        <p>Поскольку редакторы обычно упорядочивают файлы по алфавиту, все важные отношения между компонентами теперь
+            очевидны с первого взгляда.</p>
+        <p>Возможно вы захотите решить эту проблему по-другому, переместив все компоненты поиска в отдельный каталог
+            «search», а потом все компоненты параметров в каталог «settings». Мы рекомендуем применять этот подход
+            только в очень больших приложениях (например, из более 100 компонентов) по следующим причинам:</p>
+        <ul>
+            <li>Обычно требуется больше времени для навигации по вложенным подкаталогам, чем прокрутка одного каталога
+                <code>components</code>.
+            </li>
+            <li>Конфликты имён (например, многочисленные компоненты <code>ButtonDelete.vue</code>) затрудняют быстрый
+                переход к определённому компоненту в редакторе кода.
+            </li>
+            <li>Рефакторинг становится более сложным, потому что поиска с заменой часто будет недостаточно, чтобы
+                обновить относительные ссылки на перемещённый компонент.
+            </li>
+        </ul>
+    </details>
+    <div class="style-example example-bad">
+        <h4 id="Плохо-12"><a href="#Плохо-12" class="headerlink" title="Плохо"></a>Плохо</h4>
+        <pre><code class="hljs undefined">components/
+|- ClearSearchButton.vue
+|- ExcludeFromSearchInput.vue
+|- LaunchOnStartupCheckbox.vue
+|- RunSearchButton.vue
+|- SearchInput.vue
+|- TermsCheckbox.vue</code></pre>
+    </div>
+    <div class="style-example example-good">
+        <h4 id="Хорошо-12"><a href="#Хорошо-12" class="headerlink" title="Хорошо"></a>Хорошо</h4>
+        <pre><code class="hljs undefined">components/
+|- SearchButtonClear.vue
+|- SearchButtonRun.vue
+|- SearchInputQuery.vue
+|- SearchInputExcludeGlob.vue
+|- SettingsCheckboxTerms.vue
+|- SettingsCheckboxLaunchOnStartup.vue</code></pre>
+    </div>
+    <h3 id="Самозакрывающиеся-теги-компонентов-настоятельно-рекомендуется"><a
+            href="#Самозакрывающиеся-теги-компонентов-настоятельно-рекомендуется" class="headerlink"
+            title="Самозакрывающиеся теги компонентов настоятельно рекомендуется" data-scroll="">Самозакрывающиеся теги
+        компонентов <sup data-p="b">настоятельно рекомендуется</sup></a></h3>
+    <p><strong>Компоненты без содержимого должны быть самозакрывающимися тегами в однофайловых компонентах,
+        строковых шаблонах и JSX — но никогда в DOM-шаблонах.</strong></p>
+    <p>Самозакрывающиеся теги компонентов сообщают, что у них не только нет содержимого, но и <strong>сообщает</strong>
+        что и не должны иметь содержимого. Это разница между пустой страницей в книге и страницей с надписью: «Эта
+        страница намеренно оставлена пустой». Ваш код также станет более лаконичным без ненужного закрывающего тега.</p>
+    <p>К сожалению, HTML не разрешает пользовательским элементам быть самозакрывающимися — только <a
+            href="https://www.w3.org/TR/html/syntax.html#void-elements" target="_blank" rel="noopener">официальные
+        «void» элементы</a>. Вот почему эта стратегия возможна только тогда, когда компилятор шаблонов Vue может достичь
+        шаблона перед DOM, а затем предоставить DOM-совместимый HTML.</p>
+    <div class="style-example example-bad">
+        <h4 id="Плохо-13"><a href="#Плохо-13" class="headerlink" title="Плохо"></a>Плохо</h4>
+        <pre><code class="hljs html"><span class="hljs-comment">&lt;!-- В однофайловых компонентах, строковых шаблонах и JSX --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">MyComponent</span>&gt;</span><span class="hljs-tag">&lt;/<span
+                    class="hljs-name">MyComponent</span>&gt;</span></code></pre>
+        <pre><code class="hljs html"><span class="hljs-comment">&lt;!-- В DOM-шаблонах --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">my-component</span>/&gt;</span></code></pre>
+    </div>
+    <div class="style-example example-good">
+        <h4 id="Хорошо-13"><a href="#Хорошо-13" class="headerlink" title="Хорошо"></a>Хорошо</h4>
+        <pre><code class="hljs html"><span class="hljs-comment">&lt;!-- В однофайловых компонентах, строковых шаблонах и JSX --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">MyComponent</span>/&gt;</span></code></pre>
+        <pre><code class="hljs html"><span class="hljs-comment">&lt;!-- В DOM-шаблонах --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">my-component</span>&gt;</span><span class="hljs-tag">&lt;/<span
+                    class="hljs-name">my-component</span>&gt;</span></code></pre>
+    </div>
+    <h3 id="Стиль-именования-компонентов-в-шаблонах-настоятельно-рекомендуется"><a
+            href="#Стиль-именования-компонентов-в-шаблонах-настоятельно-рекомендуется" class="headerlink"
+            title="Стиль именования компонентов в шаблонах настоятельно рекомендуется" data-scroll="">Стиль именования
+        компонентов в шаблонах <sup data-p="b">настоятельно рекомендуется</sup></a></h3>
+    <p><strong>В большинстве проектов имена компонентов всегда должны быть в PascalCase в однофайловых компонентах и строковых шаблонах — но в
+        kebab-case в случае DOM-шаблонов.</strong></p>
+    <p>PascalCase имеет следующие преимущества перед kebab-case:</p>
+    <ul>
+        <li>Редакторы могут автодополнять имена компонентов в шаблонах, потому что PascalCase также используется в
+            JavaScript.
+        </li>
+        <li><code>&lt;MyComponent&gt;</code> более визуально отличается от элемента HTML из одного слова, нежели <code>&lt;my-component&gt;</code>,
+            потому что есть две заметных разницы в символах (две заглавных), а не только одна (дефис).
+        </li>
+        <li>Если вы используете какие-либо пользовательские элементы, отличные от Vue, в ваших шаблонах, например,
+            веб-компонент, PascalCase гарантирует, что ваши компоненты Vue остаются отчётливо видимыми.
+        </li>
+    </ul>
+    <p>К сожалению, из-за нечувствительности HTML к регистру, DOM-шаблоны должны по-прежнему использовать
+        kebab-case.</p>
+    <p>Также обратите внимание, что если вы уже вложили значительные силы в kebab-case, консистентность с соглашениями
+        HTML и возможность использования такого же написания во всех ваших проектах, то это может быть более важным, чем
+        преимущества, перечисленные выше. В этих случаях <strong>допускается использовать kebab-case повсюду.</strong>
+    </p>
+    <div class="style-example example-bad">
+        <h4 id="Плохо-14"><a href="#Плохо-14" class="headerlink" title="Плохо"></a>Плохо</h4>
+        <pre><code class="hljs html"><span class="hljs-comment">&lt;!-- В однофайловых компонентах и строковых шаблонах --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">mycomponent</span>/&gt;</span></code></pre>
+        <pre><code class="hljs html"><span class="hljs-comment">&lt;!-- В однофайловых компонентах и строковых шаблонах --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">myComponent</span>/&gt;</span></code></pre>
+        <pre><code class="hljs html"><span class="hljs-comment">&lt;!-- В DOM-шаблонах --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">MyComponent</span>&gt;</span><span class="hljs-tag">&lt;/<span
+                    class="hljs-name">MyComponent</span>&gt;</span></code></pre>
+    </div>
+    <div class="style-example example-good">
+        <h4 id="Хорошо-14"><a href="#Хорошо-14" class="headerlink" title="Хорошо"></a>Хорошо</h4>
+        <pre><code class="hljs html"><span class="hljs-comment">&lt;!-- В однофайловых компонентах и строковых шаблонах --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">MyComponent</span>/&gt;</span></code></pre>
+        <pre><code class="hljs html"><span class="hljs-comment">&lt;!-- В DOM-шаблонах --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">my-component</span>&gt;</span><span class="hljs-tag">&lt;/<span
+                    class="hljs-name">my-component</span>&gt;</span></code></pre>
+        <p>ИЛИ</p>
+        <pre><code class="hljs html"><span class="hljs-comment">&lt;!-- Везде --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">my-component</span>&gt;</span><span class="hljs-tag">&lt;/<span
+                    class="hljs-name">my-component</span>&gt;</span></code></pre>
+    </div>
+
+
+
+
+
+
+    <h3 id="Использование-полных-слов-при-именовании-компонентов-настоятельно-рекомендуется"><a
+            href="#Использование-полных-слов-при-именовании-компонентов-настоятельно-рекомендуется" class="headerlink"
+            title="Использование полных слов при именовании компонентов настоятельно рекомендуется" data-scroll="">Использование
+        полных слов при именовании компонентов <sup data-p="b">настоятельно рекомендуется</sup></a></h3>
+    <p><strong>Имена компонентов должны состоять из полных слов, а не аббревиатур.</strong></p>
+    <p>Автодополнение в редакторах уменьшают сложность написания более длинных имён, а ясность, которую они
+        предоставляют неоценима. Малоизвестных аббревиатур, в частности, следует избегать.</p>
+    <div class="style-example example-bad">
+        <h4 id="Плохо-16"><a href="#Плохо-16" class="headerlink" title="Плохо"></a>Плохо</h4>
+        <pre><code class="hljs undefined">components/
+|- SdSettings.vue
+|- UProfOpts.vue</code></pre>
+    </div>
+    <div class="style-example example-good">
+        <h4 id="Хорошо-16"><a href="#Хорошо-16" class="headerlink" title="Хорошо"></a>Хорошо</h4>
+        <pre><code class="hljs undefined">components/
+|- StudentDashboardSettings.vue
+|- UserProfileOptions.vue</code></pre>
+    </div>
+
+
+
+
+
+
+    <h3 id="Элементы-с-несколькими-атрибутами-настоятельно-рекомендуется"><a
+            href="#Элементы-с-несколькими-атрибутами-настоятельно-рекомендуется" class="headerlink"
+            title="Элементы с несколькими атрибутами настоятельно рекомендуется" data-scroll="">Элементы с несколькими
+        атрибутами <sup data-p="b">настоятельно рекомендуется</sup></a></h3>
+    <p><strong>Элементы с несколькими атрибутами должны располагаться на нескольких строках, по одному атрибуту на
+        строку.</strong></p>
+    <p>В JavaScript написание объектов с несколькими свойствами в несколько строк считается хорошей практикой, потому
+        что при таком написании её гораздо легче читать. Наши шаблоны и JSX стоит рассматривать также.</p>
+    <div class="style-example example-bad">
+        <h4 id="Плохо-18"><a href="#Плохо-18" class="headerlink" title="Плохо"></a>Плохо</h4>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span
+                class="hljs-attr">src</span>=<span class="hljs-string">"https://vuejs.org/images/logo.png"</span> <span
+                class="hljs-attr">alt</span>=<span class="hljs-string">"Vue Logo"</span>&gt;</span></code></pre>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">MyComponent</span> <span
+                class="hljs-attr">foo</span>=<span class="hljs-string">"a"</span> <span
+                class="hljs-attr">bar</span>=<span class="hljs-string">"b"</span> <span
+                class="hljs-attr">baz</span>=<span class="hljs-string">"c"</span>/&gt;</span></code></pre>
+    </div>
+    <div class="style-example example-good">
+        <h4 id="Хорошо-18"><a href="#Хорошо-18" class="headerlink" title="Хорошо"></a>Хорошо</h4>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">img</span>
+  <span class="hljs-attr">src</span>=<span class="hljs-string">"https://vuejs.org/images/logo.png"</span>
+  <span class="hljs-attr">alt</span>=<span class="hljs-string">"Vue Logo"</span>
+&gt;</span></code></pre>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">MyComponent</span>
+  <span class="hljs-attr">foo</span>=<span class="hljs-string">"a"</span>
+  <span class="hljs-attr">bar</span>=<span class="hljs-string">"b"</span>
+  <span class="hljs-attr">baz</span>=<span class="hljs-string">"c"</span>
+/&gt;</span></code></pre>
+    </div>
+    <h3 id="Простые-выражения-в-шаблонах-настоятельно-рекомендуется"><a
+            href="#Простые-выражения-в-шаблонах-настоятельно-рекомендуется" class="headerlink"
+            title="Простые выражения в шаблонах настоятельно рекомендуется" data-scroll="">Простые выражения в шаблонах
+        <sup data-p="b">настоятельно рекомендуется</sup></a></h3>
+    <p><strong>Шаблоны компонентов должны содержать только простые выражения, а более комплексные должны быть вынесены в
+        вычисляемые свойства или методы.</strong></p>
+    <p>Сложные выражения в ваших шаблонах делают их менее декларативными. Мы должны стремиться к описанию <em>что</em>
+        должно отобразиться, а не <em>как</em> мы вычисляем это значение. Вычисляемые свойства и методы также упрощают
+        переиспользование кода.</p>
+    <div class="style-example example-bad">
+        <h4 id="Плохо-19"><a href="#Плохо-19" class="headerlink" title="Плохо"></a>Плохо</h4>
+        <pre><code class="hljs html">{{
+  fullName.split(' ').map(function (word) {
+    return word[0].toUpperCase() + word.slice(1)
+  }).join(' ')
+}}</code></pre>
+    </div>
+    <div class="style-example example-good">
+        <h4 id="Хорошо-19"><a href="#Хорошо-19" class="headerlink" title="Хорошо"></a>Хорошо</h4>
+        <pre><code class="hljs html"><span class="hljs-comment">&lt;!-- В шаблоне --&gt;</span>
+{{ normalizedFullName }}</code></pre>
+        <pre><code class="hljs js"><span class="hljs-comment">// Комплексное выражение было вынесено в вычисляемое свойство</span>
+computed: {
+  <span class="hljs-attr">normalizedFullName</span>: <span class="hljs-function"><span
+                    class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.fullName.split(<span
+                    class="hljs-string">' '</span>).map(<span class="hljs-function"><span
+                    class="hljs-keyword">function</span> (<span class="hljs-params">word</span>) </span>{
+      <span class="hljs-keyword">return</span> word[<span class="hljs-number">0</span>].toUpperCase() + word.slice(<span
+                    class="hljs-number">1</span>)
+    }).join(<span class="hljs-string">' '</span>)
+  }
+}</code></pre>
+    </div>
+    <h3 id="Простые-вычисляемые-свойства-настоятельно-рекомендуется"><a
+            href="#Простые-вычисляемые-свойства-настоятельно-рекомендуется" class="headerlink"
+            title="Простые вычисляемые свойства настоятельно рекомендуется" data-scroll="">Простые вычисляемые свойства
+        <sup data-p="b">настоятельно рекомендуется</sup></a></h3>
+    <p><strong>Комплексные вычисляемые свойства должны быть разделены на максимально простые свойства.</strong></p>
+
+
+    <details>
+        <summary>
+            <h4>Подробное объяснение</h4>
+        </summary>
+
+        <p>Проще говоря, хорошие вычисляемые свойства будет:</p>
+        <ul>
+            <li><p><strong>Легче тестировать</strong></p>
+                <p>Когда каждое вычисляемое свойство содержит только очень простое выражение, с очень небольшим набором
+                    зависимостей, то будет гораздо проще писать тесты, подтверждающие его правильную работу.</p>
+            </li>
+            <li><p><strong>Легче читать</strong></p>
+                <p>Упрощение вычисляемых свойств заставляет вас давать каждому значению понятное имя, даже если оно не
+                    будет использоваться повторно. Это облегчает другим разработчикам (и вам в будущем) сосредоточиться
+                    на коде, который им нужен и выяснить что происходит.</p>
+            </li>
+            <li><p><strong>Лучше приспособлены к изменяющимся требованиям</strong></p>
+                <p>Любое значение, которое можно назвать, может быть полезным для представления. Например, мы можем
+                    решить отображать сообщение пользователю с информацией сколько денег сэкономил. Мы также можем
+                    решить рассчитывать налог с продаж, но, возможно, отображать его отдельно, а не как часть
+                    окончательной цены.</p>
+                <p>Небольшие, сфокусированные вычисляемые свойства создают меньше предположений о том, как информация
+                    будет использована, поэтому при изменениях требований потребуется меньше рефакторинга.</p>
+            </li>
+        </ul>
+    </details>
+    <div class="style-example example-bad">
+        <h4 id="Плохо-20"><a href="#Плохо-20" class="headerlink" title="Плохо"></a>Плохо</h4>
+        <pre><code class="hljs js">computed: {
+  <span class="hljs-attr">price</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span
+                    class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> basePrice = <span class="hljs-keyword">this</span>.manufactureCost / (<span
+                    class="hljs-number">1</span> - <span class="hljs-keyword">this</span>.profitMargin)
+    <span class="hljs-keyword">return</span> (
+      basePrice -
+      basePrice * (<span class="hljs-keyword">this</span>.discountPercent || <span class="hljs-number">0</span>)
+    )
+  }
+}</code></pre>
+    </div>
+    <div class="style-example example-good">
+        <h4 id="Хорошо-20"><a href="#Хорошо-20" class="headerlink" title="Хорошо"></a>Хорошо</h4>
+        <pre><code class="hljs js">computed: {
+  <span class="hljs-attr">basePrice</span>: <span class="hljs-function"><span
+                    class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.manufactureCost / (<span
+                    class="hljs-number">1</span> - <span class="hljs-keyword">this</span>.profitMargin)
+  },
+  <span class="hljs-attr">discount</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span
+                    class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.basePrice * (<span
+                    class="hljs-keyword">this</span>.discountPercent || <span class="hljs-number">0</span>)
+  },
+  <span class="hljs-attr">finalPrice</span>: <span class="hljs-function"><span
+                    class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.basePrice - <span
+                    class="hljs-keyword">this</span>.discount
+  }
+}</code></pre>
+    </div>
+    <h3 id="Значения-атрибутов-в-кавычках-настоятельно-рекомендуется"><a
+            href="#Значения-атрибутов-в-кавычках-настоятельно-рекомендуется" class="headerlink"
+            title="Значения атрибутов в кавычках настоятельно рекомендуется" data-scroll="">Значения атрибутов в
+        кавычках <sup data-p="b">настоятельно рекомендуется</sup></a></h3>
+    <p><strong>Непустые значения HTML-атрибутов должны быть обрамлены кавычками (одинарными или двойными, в зависимости
+        от того, что не используется в JS).</strong></p>
+    <p>Хотя значения атрибутов без каких-либо пробелов не требуют иметь кавычки в HTML, эта практика зачастую приводит к
+        <em>избеганию</em> использования пробелов, делая значения атрибутов менее читабельными.</p>
+    <div class="style-example example-bad">
+        <h4 id="Плохо-21"><a href="#Плохо-21" class="headerlink" title="Плохо"></a>Плохо</h4>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span
+                class="hljs-attr">type</span>=<span class="hljs-string">text</span>&gt;</span></code></pre>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">AppSidebar</span> <span
+                class="hljs-attr">:style</span>=<span class="hljs-string">{width:sidebarWidth+</span>'<span
+                class="hljs-attr">px</span>'}&gt;</span></code></pre>
+    </div>
+    <div class="style-example example-good">
+        <h4 id="Хорошо-21"><a href="#Хорошо-21" class="headerlink" title="Хорошо"></a>Хорошо</h4>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span
+                class="hljs-attr">type</span>=<span class="hljs-string">"text"</span>&gt;</span></code></pre>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">AppSidebar</span> <span
+                class="hljs-attr">:style</span>=<span
+                class="hljs-string">"{ width: sidebarWidth + 'px' }"</span>&gt;</span></code></pre>
+    </div>
+    <h3 id="Сокращённая-запись-директив-настоятельно-рекомендуется"><a
+            href="#Сокращённая-запись-директив-настоятельно-рекомендуется" class="headerlink"
+            title="Сокращённая запись директив настоятельно рекомендуется" data-scroll="">Сокращённая запись директив
+        <sup data-p="b">настоятельно рекомендуется</sup></a></h3>
+    <p><strong>Сокращённую запись директив (<code>:</code> для <code>v-bind:</code> и <code>@</code> для
+        <code>v-on:</code>) следует использовать всегда или никогда.</strong></p>
+    <div class="style-example example-bad">
+        <h4 id="Плохо-22"><a href="#Плохо-22" class="headerlink" title="Плохо"></a>Плохо</h4>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+  <span class="hljs-attr">v-bind:value</span>=<span class="hljs-string">"newTodoText"</span>
+  <span class="hljs-attr">:placeholder</span>=<span class="hljs-string">"newTodoInstructions"</span>
+&gt;</span></code></pre>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+  <span class="hljs-attr">v-on:input</span>=<span class="hljs-string">"onInput"</span>
+  @<span class="hljs-attr">focus</span>=<span class="hljs-string">"onFocus"</span>
+&gt;</span></code></pre>
+    </div>
+    <div class="style-example example-good">
+        <h4 id="Хорошо-22"><a href="#Хорошо-22" class="headerlink" title="Хорошо"></a>Хорошо</h4>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+  <span class="hljs-attr">:value</span>=<span class="hljs-string">"newTodoText"</span>
+  <span class="hljs-attr">:placeholder</span>=<span class="hljs-string">"newTodoInstructions"</span>
+&gt;</span></code></pre>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+  <span class="hljs-attr">v-bind:value</span>=<span class="hljs-string">"newTodoText"</span>
+  <span class="hljs-attr">v-bind:placeholder</span>=<span class="hljs-string">"newTodoInstructions"</span>
+&gt;</span></code></pre>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+  @<span class="hljs-attr">input</span>=<span class="hljs-string">"onInput"</span>
+  @<span class="hljs-attr">focus</span>=<span class="hljs-string">"onFocus"</span>
+&gt;</span></code></pre>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+  <span class="hljs-attr">v-on:input</span>=<span class="hljs-string">"onInput"</span>
+  <span class="hljs-attr">v-on:focus</span>=<span class="hljs-string">"onFocus"</span>
+&gt;</span></code></pre>
+    </div>
+    <h2 id="Правила-приоритета-C-Рекомендуется-Минимизация-произвольных-выборов-и-накладных-расходов"><a
+            href="#Правила-приоритета-C-Рекомендуется-Минимизация-произвольных-выборов-и-накладных-расходов"
+            class="headerlink"
+            title="Правила приоритета C: Рекомендуется (Минимизация произвольных выборов и накладных расходов)"
+            data-scroll="">Правила приоритета C: Рекомендуется (Минимизация произвольных выборов и накладных
+        расходов)</a></h2>
+    <h3 id="Порядок-опций-компонента-экземпляра-рекомендуется"><a
+            href="#Порядок-опций-компонента-экземпляра-рекомендуется" class="headerlink"
+            title="Порядок опций компонента/экземпляра рекомендуется" data-scroll="">Порядок опций компонента/экземпляра
+        <sup data-p="c">рекомендуется</sup></a></h3>
+    <p><strong>Опции компонента/экземпляра должны быть упорядочены консистентно.</strong></p>
+    <p>Это порядок по умолчанию, который мы рекомендуем для опций компонентов. Они разделены на категории, поэтому вы
+        поймёте, где добавлять новые свойства из плагинов.</p>
+    <ol>
+        <li><p><strong>Побочные эффекты</strong> (вызывает эффекты вне компонента)</p>
+            <ul>
+                <li><code>el</code></li>
+            </ul>
+        </li>
+        <li><p><strong>Глобальная осведомлённость</strong> (требует знаний вне компонента)</p>
+            <ul>
+                <li><code>name</code></li>
+                <li><code>parent</code></li>
+            </ul>
+        </li>
+        <li><p><strong>Тип компонента</strong> (изменяет тип компонента)</p>
+            <ul>
+                <li><code>functional</code></li>
+            </ul>
+        </li>
+        <li><p><strong>Модификаторы шаблона</strong> (изменение способа компиляции шаблонов)</p>
+            <ul>
+                <li><code>delimiters</code></li>
+                <li><code>comments</code></li>
+            </ul>
+        </li>
+        <li><p><strong>Зависимости шаблона</strong> (ресурсы, используемые в шаблоне)</p>
+            <ul>
+                <li><code>components</code></li>
+                <li><code>directives</code></li>
+                <li><code>filters</code></li>
+            </ul>
+        </li>
+        <li><p><strong>Композиция</strong> (объединение свойств в опциях)</p>
+            <ul>
+                <li><code>extends</code></li>
+                <li><code>mixins</code></li>
+            </ul>
+        </li>
+        <li><p><strong>Интерфейс</strong> (интерфейс компонента)</p>
+            <ul>
+                <li><code>inheritAttrs</code></li>
+                <li><code>model</code></li>
+                <li><code>props</code>/<code>propsData</code></li>
+            </ul>
+        </li>
+        <li><p><strong>Локальное состояние</strong> (локальные реактивные свойства)</p>
+            <ul>
+                <li><code>data</code></li>
+                <li><code>computed</code></li>
+            </ul>
+        </li>
+        <li><p><strong>События</strong> (коллбэки вызываемые реактивными событиями)</p>
+            <ul>
+                <li><code>watch</code></li>
+                <li>События хуков жизненного цикла (в порядке их вызова)
+                    <ul>
+                        <li><code>beforeCreate</code></li>
+                        <li><code>created</code></li>
+                        <li><code>beforeMount</code></li>
+                        <li><code>mounted</code></li>
+                        <li><code>beforeUpdate</code></li>
+                        <li><code>updated</code></li>
+                        <li><code>activated</code></li>
+                        <li><code>deactivated</code></li>
+                        <li><code>beforeDestroy</code></li>
+                        <li><code>destroyed</code></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><p><strong>Нереактивные свойства</strong> (свойства экземпляра независимые от системы реактивности)</p>
+            <ul>
+                <li><code>methods</code></li>
+            </ul>
+        </li>
+        <li><p><strong>Отрисовка</strong> (декларативное описание вывода компонента)</p>
+            <ul>
+                <li><code>template</code>/<code>render</code></li>
+                <li><code>renderError</code></li>
+            </ul>
+        </li>
+    </ol>
+    <h3 id="Порядок-атрибутов-элемента-рекомендуется"><a href="#Порядок-атрибутов-элемента-рекомендуется"
+                                                         class="headerlink"
+                                                         title="Порядок атрибутов элемента рекомендуется"
+                                                         data-scroll="">Порядок атрибутов элемента <sup data-p="c">рекомендуется</sup></a>
+    </h3>
+    <p><strong>Атрибуты элементов (в том числе компонентов) должны быть упорядочены консистентно.</strong></p>
+    <p>Этот порядок по умолчанию мы рекомендуем для опций компонентов. Они разделены на категории, поэтому вы узнаете,
+        где добавлять пользовательские атрибуты и директивы.</p>
+    <ol>
+        <li><p><strong>Определение</strong> (предоставляет параметры компонента)</p>
+            <ul>
+                <li><code>is</code></li>
+            </ul>
+        </li>
+        <li><p><strong>Отображение списка</strong> (создаёт несколько вариантов одного элемента)</p>
+            <ul>
+                <li><code>v-for</code></li>
+            </ul>
+        </li>
+        <li><p><strong>Условия</strong> (указывается отрисовывается/отображается ли элемент)</p>
+            <ul>
+                <li><code>v-if</code></li>
+                <li><code>v-else-if</code></li>
+                <li><code>v-else</code></li>
+                <li><code>v-show</code></li>
+                <li><code>v-cloak</code></li>
+            </ul>
+        </li>
+        <li><p><strong>Модификаторы отрисовки</strong> (изменяют способ отрисовки элемента)</p>
+            <ul>
+                <li><code>v-pre</code></li>
+                <li><code>v-once</code></li>
+            </ul>
+        </li>
+        <li><p><strong>Глобальная осведомлённость</strong> (требует знаний вне компонента)</p>
+            <ul>
+                <li><code>id</code></li>
+            </ul>
+        </li>
+        <li><p><strong>Уникальные атрибуты</strong> (атрибуты, требующие уникальных значений)</p>
+            <ul>
+                <li><code>ref</code></li>
+                <li><code>key</code></li>
+                <li><code>slot</code></li>
+            </ul>
+        </li>
+        <li><p><strong>Двусторонняя привязка</strong> (объединение привязки и событий)</p>
+            <ul>
+                <li><code>v-model</code></li>
+            </ul>
+        </li>
+        <li><p><strong>Другие атрибуты</strong> (все неуказанные связанные или несвязанные атрибуты)</p>
+        </li>
+        <li><p><strong>События</strong> (обработчики событий компонента)</p>
+            <ul>
+                <li><code>v-on</code></li>
+            </ul>
+        </li>
+        <li><p><strong>Содержимое</strong> (перезаписывает содержимое элемента)</p>
+            <ul>
+                <li><code>v-html</code></li>
+                <li><code>v-text</code></li>
+            </ul>
+        </li>
+    </ol>
+    <h3 id="Пустые-строки-между-опций-компонента-экземпляра-рекомендуется"><a
+            href="#Пустые-строки-между-опций-компонента-экземпляра-рекомендуется" class="headerlink"
+            title="Пустые строки между опций компонента/экземпляра рекомендуется" data-scroll="">Пустые строки между
+        опций компонента/экземпляра <sup data-p="c">рекомендуется</sup></a></h3>
+    <p><strong>Вы можете добавить одну пустую строку между многострочными свойствами, особенно если опции не могут
+        больше помещаться на вашем экране без прокрутки.</strong></p>
+    <p>Когда компоненты кажутся неразборчивыми и становятся трудными для чтения, то добавление пустых строк между
+        многострочными свойствами может облегчить их беглое изучение просматривая взглядом. В некоторых редакторах,
+        таких как Vim, параметры форматирования подобные этому также могут облегчить навигацию с клавиатуры.</p>
+    <div class="style-example example-good">
+        <h4 id="Хорошо-23"><a href="#Хорошо-23" class="headerlink" title="Хорошо"></a>Хорошо</h4>
+        <pre><code class="hljs js">props: {
+  <span class="hljs-attr">value</span>: {
+    <span class="hljs-attr">type</span>: <span class="hljs-built_in">String</span>,
+    <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>
+  },
+
+  <span class="hljs-attr">focused</span>: {
+    <span class="hljs-attr">type</span>: <span class="hljs-built_in">Boolean</span>,
+    <span class="hljs-attr">default</span>: <span class="hljs-literal">false</span>
+  },
+
+  <span class="hljs-attr">label</span>: <span class="hljs-built_in">String</span>,
+  <span class="hljs-attr">icon</span>: <span class="hljs-built_in">String</span>
+},
+
+<span class="hljs-attr">computed</span>: {
+  <span class="hljs-attr">formattedValue</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span
+                    class="hljs-params"></span>) </span>{
+    <span class="hljs-comment">// ...</span>
+  },
+
+  <span class="hljs-attr">inputClasses</span>: <span class="hljs-function"><span
+                    class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-comment">// ...</span>
+  }
+}</code></pre>
+        <pre><code class="hljs js"><span class="hljs-comment">// Отсутствие пробелов не мешает, если компонент</span>
+<span class="hljs-comment">// всё ещё легко читать и перемещаться по нему.</span>
+props: {
+  <span class="hljs-attr">value</span>: {
+    <span class="hljs-attr">type</span>: <span class="hljs-built_in">String</span>,
+    <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>
+  },
+  <span class="hljs-attr">focused</span>: {
+    <span class="hljs-attr">type</span>: <span class="hljs-built_in">Boolean</span>,
+    <span class="hljs-attr">default</span>: <span class="hljs-literal">false</span>
+  },
+  <span class="hljs-attr">label</span>: <span class="hljs-built_in">String</span>,
+  <span class="hljs-attr">icon</span>: <span class="hljs-built_in">String</span>
+},
+<span class="hljs-attr">computed</span>: {
+  <span class="hljs-attr">formattedValue</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span
+                    class="hljs-params"></span>) </span>{
+    <span class="hljs-comment">// ...</span>
+  },
+  <span class="hljs-attr">inputClasses</span>: <span class="hljs-function"><span
+                    class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-comment">// ...</span>
+  }
+}</code></pre>
+    </div>
+    <h3 id="Порядок-секций-в-однофайловых-компонентах-рекомендуется"><a
+            href="#Порядок-секций-в-однофайловых-компонентах-рекомендуется" class="headerlink"
+            title="Порядок секций в однофайловых компонентах рекомендуется" data-scroll="">Порядок секций в однофайловых
+        компонентах <sup data-p="c">рекомендуется</sup></a></h3>
+    <p><strong>Однофайловые компоненты должны всегда использовать
+        один порядок для корневых тегов секций <code>&lt;script&gt;</code>, <code>&lt;template&gt;</code> и <code>&lt;style&gt;</code>,
+        заканчиваясь <code>&lt;style&gt;</code>, потому что всегда требуется хотя бы одна из двух других.</strong></p>
+    <div class="style-example example-bad">
+        <h4 id="Плохо-23"><a href="#Плохо-23" class="headerlink" title="Плохо"></a>Плохо</h4>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span
+                class="css"><span class="hljs-comment">/* ... */</span></span><span class="hljs-tag">&lt;/<span
+                class="hljs-name">style</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"><span
+                    class="hljs-comment">/* ... */</span></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>...<span class="hljs-tag">&lt;/<span
+                    class="hljs-name">template</span>&gt;</span></code></pre>
+        <pre><code class="hljs html"><span class="hljs-comment">&lt;!-- ComponentA.vue --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"><span
+                    class="hljs-comment">/* ... */</span></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>...<span class="hljs-tag">&lt;/<span
+                    class="hljs-name">template</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="css"><span class="hljs-comment">/* ... */</span></span><span
+                    class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!-- ComponentB.vue --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>...<span class="hljs-tag">&lt;/<span
+                    class="hljs-name">template</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"><span
+                    class="hljs-comment">/* ... */</span></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="css"><span class="hljs-comment">/* ... */</span></span><span
+                    class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span></code></pre>
+    </div>
+    <div class="style-example example-good">
+        <h4 id="Хорошо-24"><a href="#Хорошо-24" class="headerlink" title="Хорошо"></a>Хорошо</h4>
+        <pre><code class="hljs html"><span class="hljs-comment">&lt;!-- ComponentA.vue --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"><span
+                    class="hljs-comment">/* ... */</span></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>...<span class="hljs-tag">&lt;/<span
+                    class="hljs-name">template</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="css"><span class="hljs-comment">/* ... */</span></span><span
+                    class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!-- ComponentB.vue --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"><span
+                    class="hljs-comment">/* ... */</span></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>...<span class="hljs-tag">&lt;/<span
+                    class="hljs-name">template</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="css"><span class="hljs-comment">/* ... */</span></span><span
+                    class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span></code></pre>
+        <pre><code class="hljs html"><span class="hljs-comment">&lt;!-- ComponentA.vue --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>...<span class="hljs-tag">&lt;/<span
+                    class="hljs-name">template</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"><span
+                    class="hljs-comment">/* ... */</span></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="css"><span class="hljs-comment">/* ... */</span></span><span
+                    class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!-- ComponentB.vue --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>...<span class="hljs-tag">&lt;/<span
+                    class="hljs-name">template</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"><span
+                    class="hljs-comment">/* ... */</span></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="css"><span class="hljs-comment">/* ... */</span></span><span
+                    class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span></code></pre>
+    </div>
+    <h2 id="Правила-приоритета-D-Используйте-с-осторожностью-Потенциально-опасные-паттерны"><a
+            href="#Правила-приоритета-D-Используйте-с-осторожностью-Потенциально-опасные-паттерны" class="headerlink"
+            title="Правила приоритета D: Используйте с осторожностью (Потенциально опасные паттерны)" data-scroll="">Правила
+        приоритета D: Используйте с осторожностью (Потенциально опасные паттерны)</a></h2>
+    <h3 id="v-if-v-else-if-v-else-без-key-используйте-с-осторожностью"><a
+            href="#v-if-v-else-if-v-else-без-key-используйте-с-осторожностью" class="headerlink"
+            title="v-if/v-else-if/v-else без key используйте с осторожностью" data-scroll=""><code>v-if</code>/<code>v-else-if</code>/<code>v-else</code>
+        без <code>key</code> <sup data-p="d">используйте с осторожностью</sup></a></h3>
+    <p><strong>Обычно лучше использовать <code>key</code> вместе с <code>v-if</code> + <code>v-else</code>, если они
+        являются одним и тем же типом элемента (например, когда оба элемента <code>&lt;div&gt;</code>).</strong></p>
+    <p>По умолчанию Vue обновляет DOM максимально эффективно. Это означает, что при переключении между элементами одного
+        и того же типа, он просто исправляет текущий элемент, а не удаляет его и добавляет новый на своё место. Это
+        может привести к <a href="https://jsfiddle.net/chrisvfritz/bh8fLeds/" target="_blank" rel="noopener">непреднамеренным
+            побочным эффектам</a>, если эти элементы не должны считаться одинаковыми.</p>
+    <div class="style-example example-bad">
+        <h4 id="Плохо-24"><a href="#Плохо-24" class="headerlink" title="Плохо"></a>Плохо</h4>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span
+                class="hljs-attr">v-if</span>=<span class="hljs-string">"error"</span>&gt;</span>
+  Ошибка: {{ error }}
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">v-else</span>&gt;</span>
+  {{ results }}
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre>
+    </div>
+    <div class="style-example example-good">
+        <h4 id="Хорошо-25"><a href="#Хорошо-25" class="headerlink" title="Хорошо"></a>Хорошо</h4>
+        <pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>
+  <span class="hljs-attr">v-if</span>=<span class="hljs-string">"error"</span>
+  <span class="hljs-attr">key</span>=<span class="hljs-string">"search-status"</span>
+&gt;</span>
+  Ошибка: {{ error }}
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>
+  <span class="hljs-attr">v-else</span>
+  <span class="hljs-attr">key</span>=<span class="hljs-string">"search-results"</span>
+&gt;</span>
+  {{ results }}
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre>
+    </div>
+
+
+
+
+
+    <h3 id="Неявная-коммуникация-между-родительским-и-дочерними-компонентами-используйте-с-осторожностью"><a
+            href="#Неявная-коммуникация-между-родительским-и-дочерними-компонентами-используйте-с-осторожностью"
+            class="headerlink"
+            title="Неявная коммуникация между родительским и дочерними компонентами используйте с осторожностью"
+            data-scroll="">Неявная коммуникация между родительским и дочерними компонентами <sup data-p="d">используйте
+        с осторожностью</sup></a></h3>
+    <p><strong>Входные параметры и события должны быть предпочтительным способом коммуникации между родительским и
+        дочерними компонентами, вместо использования <code>this.$parent</code> или изменения входных
+        параметров.</strong></p>
+    <p>В идеальном Vue приложении входные параметры передаются вниз, события всплывают наверх. Придерживаясь этого
+        соглашения ваши компоненты будет намного легче понять. Тем не менее, есть крайние случаи, когда изменения
+        входных параметров или использование <code>this.$parent</code> могут упростить два компонента, которые уже
+        глубоко связаны между собой.</p>
+    <p>Проблема в том, что есть также множество <em>простых</em> случаев, когда эти шаблоны могут показаться удобнее.
+        Остерегайтесь: не соблазняйтесь кажущейся простоте (чтобы понять поток вашего состояния) для краткосрочной
+        выгоды (написания чуть меньшего количества кода).</p>
+    <div class="style-example example-bad">
+        <h4 id="Плохо-26"><a href="#Плохо-26" class="headerlink" title="Плохо"></a>Плохо</h4>
+        <pre><code class="hljs js">Vue.component(<span class="hljs-string">'TodoItem'</span>, {
+  <span class="hljs-attr">props</span>: {
+    <span class="hljs-attr">todo</span>: {
+      <span class="hljs-attr">type</span>: <span class="hljs-built_in">Object</span>,
+      <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>
+    }
+  },
+  <span class="hljs-attr">template</span>: <span class="hljs-string">'&lt;input v-model="todo.text"&gt;'</span>
+})</code></pre>
+        <pre><code class="hljs js">Vue.component(<span class="hljs-string">'TodoItem'</span>, {
+  <span class="hljs-attr">props</span>: {
+    <span class="hljs-attr">todo</span>: {
+      <span class="hljs-attr">type</span>: <span class="hljs-built_in">Object</span>,
+      <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>
+    }
+  },
+  <span class="hljs-attr">methods</span>: {
+    removeTodo() {
+      <span class="hljs-keyword">var</span> vm = <span class="hljs-keyword">this</span>
+      vm.$parent.todos = vm.$parent.todos.filter(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span
+                    class="hljs-params">todo</span>) </span>{
+        <span class="hljs-keyword">return</span> todo.id !== vm.todo.id
+      })
+    }
+  },
+  <span class="hljs-attr">template</span>: <span class="hljs-string">`
+    &lt;span&gt;
+      {{ todo.text }}
+      &lt;button @click="removeTodo"&gt;
+        X
+      &lt;/button&gt;
+    &lt;/span&gt;
+  `</span>
+})</code></pre>
+    </div>
+    <div class="style-example example-good">
+        <h4 id="Хорошо-27"><a href="#Хорошо-27" class="headerlink" title="Хорошо"></a>Хорошо</h4>
+        <pre><code class="hljs js">Vue.component(<span class="hljs-string">'TodoItem'</span>, {
+  <span class="hljs-attr">props</span>: {
+    <span class="hljs-attr">todo</span>: {
+      <span class="hljs-attr">type</span>: <span class="hljs-built_in">Object</span>,
+      <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>
+    }
+  },
+  <span class="hljs-attr">template</span>: <span class="hljs-string">`
+    &lt;input
+      :value="todo.text"
+      @input="$emit('input', $event.target.value)"
+    &gt;
+  `</span>
+})</code></pre>
+        <pre><code class="hljs js">Vue.component(<span class="hljs-string">'TodoItem'</span>, {
+  <span class="hljs-attr">props</span>: {
+    <span class="hljs-attr">todo</span>: {
+      <span class="hljs-attr">type</span>: <span class="hljs-built_in">Object</span>,
+      <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>
+    }
+  },
+  <span class="hljs-attr">template</span>: <span class="hljs-string">`
+    &lt;span&gt;
+      {{ todo.text }}
+      &lt;button @click="$emit('delete')"&gt;
+        X
+      &lt;/button&gt;
+    &lt;/span&gt;
+  `</span>
+})</code></pre>
+    </div>
+    <h3 id="Управление-состоянием-приложения-без-flux-используйте-с-осторожностью"><a
+            href="#Управление-состоянием-приложения-без-flux-используйте-с-осторожностью" class="headerlink"
+            title="Управление состоянием приложения без flux используйте с осторожностью" data-scroll="">Управление
+        состоянием приложения без flux <sup data-p="d">используйте с осторожностью</sup></a></h3>
+    <p><strong><a href="https://github.com/vuejs/vuex" target="_blank" rel="noopener">Vuex</a> должен быть
+        предпочтительным способом для глобального управления состоянием приложения вместо использования
+        <code>this.$root</code> или глобальной шины событий.</strong></p>
+    <p>Управление состоянием через <code>this.$root</code> и/или использование глобальной шины событий может быть
+        удобным для очень простых случаев, но не подходит для большинства приложений. Vuex предлагает не только
+        глобальное место для управления состоянием приложения, но и также инструменты для организации, отслеживания и
+        отладки изменений состояния.</p>
+
+    <div class="style-example example-bad">
+        <h4 id="Плохо-27"><a href="#Плохо-27" class="headerlink" title="Плохо"></a>Плохо</h4>
+        <pre><code class="hljs js"><span class="hljs-comment">// main.js</span>
+<span class="hljs-keyword">new</span> Vue({
+  <span class="hljs-attr">data</span>: {
+    <span class="hljs-attr">todos</span>: []
+  },
+  <span class="hljs-attr">created</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span
+                    class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">this</span>.$on(<span class="hljs-string">'remove-todo'</span>, <span
+                    class="hljs-keyword">this</span>.removeTodo)
+  },
+  <span class="hljs-attr">methods</span>: {
+    <span class="hljs-attr">removeTodo</span>: <span class="hljs-function"><span
+                    class="hljs-keyword">function</span>(<span class="hljs-params">todo</span>) </span>{
+      <span class="hljs-keyword">var</span> todoIdToRemove = todo.id
+      <span class="hljs-keyword">this</span>.todos = <span class="hljs-keyword">this</span>.todos.filter(<span
+                    class="hljs-function"><span class="hljs-keyword">function</span>(<span
+                    class="hljs-params">todo</span>) </span>{
+        <span class="hljs-keyword">return</span> todo.id !== todoIdToRemove
+      })
+    }
+  }
+})</code></pre>
+    </div>
+    <div class="style-example example-good">
+        <h4 id="Хорошо-28"><a href="#Хорошо-28" class="headerlink" title="Хорошо"></a>Хорошо</h4>
+        <pre><code class="hljs js"><span class="hljs-comment">// store/modules/todos.js</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {
+  <span class="hljs-attr">state</span>: {
+    <span class="hljs-attr">list</span>: []
+  },
+  <span class="hljs-attr">mutations</span>: {
+    REMOVE_TODO(state, todoId) {
+      state.list = state.list.filter(<span class="hljs-function"><span class="hljs-params">todo</span> =&gt;</span> todo.id !== todoId)
+    }
+  },
+  <span class="hljs-attr">actions</span>: {
+    removeTodo({ commit, state }, todo) {
+      commit(<span class="hljs-string">'REMOVE_TODO'</span>, todo.id)
+    }
+  }
+}</code></pre>
+        <pre><code class="hljs html"><span class="hljs-comment">&lt;!-- TodoItem.vue --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>
+    {{ todo.text }}
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span
+            class="hljs-string">"removeTodo(todo)"</span>&gt;</span>
+      X
+    <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+<span class="hljs-keyword">import</span> { mapActions } <span class="hljs-keyword">from</span> <span
+                    class="hljs-string">'vuex'</span>
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {
+  <span class="hljs-attr">props</span>: {
+    <span class="hljs-attr">todo</span>: {
+      <span class="hljs-attr">type</span>: <span class="hljs-built_in">Object</span>,
+      <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>
+    }
+  },
+  <span class="hljs-attr">methods</span>: mapActions([<span class="hljs-string">'removeTodo'</span>])
+}
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
+    </div>
+</div>
+</body>
+</html>
